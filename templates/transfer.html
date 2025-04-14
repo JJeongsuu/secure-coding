@@ -7,6 +7,7 @@
   {{ form.hidden_tag() }}
   받는 사용자명: {{ form.receiver_username(size=30) }}<br>
   금액: {{ form.amount(size=10) }} 원<br>
+  비밀번호 확인: {{ form.password(size=30) }}<br>
   {{ form.submit() }}
 </form>
 {% endblock %}

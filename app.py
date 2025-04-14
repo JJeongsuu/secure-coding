@@ -108,6 +108,7 @@ class TransferForm(FlaskForm):
         DataRequired(),
         Regexp(r'^\d+$', message="숫자만 입력하세요.")
     ])
+    password = PasswordField('비밀번호 확인', validators=[DataRequired()])
     submit = SubmitField('송금하기')
 
 
@@ -374,6 +375,12 @@ def transfer():
     sender = cursor.fetchone()
 
     if form.validate_on_submit():
+        #비밀번호 재검증
+        input_password = form.password.data
+        if not bcrypt.checkpw(input_password.encode(), sender['password']):
+            flash("비밀번호가 일치하지 않습니다.")
+            return redirect(url_for('transfer'))
+        
         receiver_name = form.receiver_username.data
         amount = int(form.amount.data)
 
