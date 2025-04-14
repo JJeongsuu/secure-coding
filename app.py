@@ -11,6 +11,8 @@ from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Regexp
 from datetime import timedelta   #세션 시간위해서
+from time import sleep
+
 
 app = Flask(__name__)
 
@@ -189,8 +191,12 @@ def login():
         password = form.password.data
         db = get_db()
         cursor = db.cursor()
+
+        session['login_failures'] = session.get('login_failures', 0)
+
         cursor.execute("SELECT * FROM user WHERE username = ?", (username,))
         user = cursor.fetchone()
+
         if user and bcrypt.checkpw(password.encode(), user['password']):
             session.clear()  # session fixation 방지
             session['user_id'] = user['id']
@@ -203,6 +209,10 @@ def login():
             return redirect(url_for('dashboard'))
         
         else:
+            # 실패한 경우
+            session['login_failures'] += 1
+            if session['login_failures'] >= 5:
+                sleep(3)  # 5회 이상 실패시 3초 딜레이
             flash('아이디 또는 비밀번호가 올바르지 않습니다.')
             return redirect(url_for('login'))
     return render_template('login.html', form = form)
