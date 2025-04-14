@@ -47,7 +47,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField('사용자명', validators=[
         DataRequired(),
-        Length(min=6, max=100)
+        Length(min=4, max=100)
     ])
     password = PasswordField('비밀번호', validators=[
         DataRequired(),
@@ -167,8 +167,14 @@ def login():
         if user and bcrypt.checkpw(password.encode(), user['password']):
             session.clear()  # session fixation 방지
             session['user_id'] = user['id']
+            #관리자 --> /admin 으로 리디렉션
+            if user['is_admin'] == 1:
+                flash('관리자 로그인 성공!')
+                return redirect(url_for('admin_panel'))
+            
             flash('로그인 성공!')
             return redirect(url_for('dashboard'))
+        
         else:
             flash('아이디 또는 비밀번호가 올바르지 않습니다.')
             return redirect(url_for('login'))
@@ -288,6 +294,69 @@ def handle_send_message_event(data):
     data['message_id'] = str(uuid.uuid4())
     send(data, broadcast=True)
 
+
+@app.route('/admin')
+def admin_panel():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM user WHERE id = ?", (session['user_id'],))
+    current_user = cursor.fetchone()
+
+    if current_user['is_admin'] != 1:
+        flash("접근 권한이 없습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 유저, 상품, 신고 목록 가져오기
+    cursor.execute("SELECT * FROM user")
+    users = cursor.fetchall()
+    cursor.execute("SELECT * FROM product")
+    products = cursor.fetchall()
+    cursor.execute("SELECT * FROM report")
+    reports = cursor.fetchall()
+
+    return render_template("admin.html", users=users, products=products, reports=reports)
+
+
+
+##########보안 상 삭제하는 것이지만 과제제출이므로 주석처리로 삭제 표현
+#DB에 반영
+#@app.route('/add-admin-column')
+#def add_admin_column():
+#    db = get_db()
+#    cursor = db.cursor()
+#    try:
+#        cursor.execute("ALTER TABLE user ADD COLUMN is_admin INTEGER DEFAULT 0")
+#        db.commit()
+#        return "is_admin 컬럼 추가"
+#    except:
+#        return "이미 존재/ 오류"
+
+
+#관리자 페이지
+# @app.route('/create-admin')
+# def create_admin():
+#     db = get_db()
+#     cursor = db.cursor()
+
+#     import uuid
+
+#     admin_id = str(uuid.uuid4())
+#     hashed_pw = bcrypt.hashpw("admin123".encode(), bcrypt.gensalt())
+#     cursor.execute(
+#         "INSERT INTO user (id, username, password, is_admin) VALUES (?, ?, ?, ?)",
+#         (admin_id, "admin", hashed_pw, 1)
+#     )
+#     db.commit()
+#     return "관리자 계정 생성"
+
 if __name__ == '__main__':
     init_db()  # 앱 컨텍스트 내에서 테이블 생성
     socketio.run(app, debug=True)
+
+
+
+
+
