@@ -390,6 +390,46 @@ def transfer():
     return render_template("transfer.html", form=form, balance=sender['balance'])
 
 
+@app.route('/admin/process_report/<report_id>')
+def process_report(report_id):
+    db = get_db()
+    cursor = db.cursor()
+
+    # 1. 신고 내용 가져오기
+    cursor.execute("SELECT * FROM report WHERE id = ?", (report_id,))
+    report = cursor.fetchone()
+    if not report:
+        flash("해당 신고가 존재하지 않습니다.")
+        return redirect(url_for('admin_panel'))
+
+    target_id = report['target_id']
+
+    # 2. user 테이블에서 검색
+    cursor.execute("SELECT * FROM user WHERE id = ?", (target_id,))
+    user = cursor.fetchone()
+
+    if user:
+        # 유저 차단
+        cursor.execute("UPDATE user SET is_blocked = 1 WHERE id = ?", (target_id,))
+        db.commit()
+        flash(f"사용자 {user['username']} 차단 완료")
+        return redirect(url_for('admin_panel'))
+
+    # 3. product 테이블에서 검색
+    cursor.execute("SELECT * FROM product WHERE id = ?", (target_id,))
+    product = cursor.fetchone()
+
+    if product:
+        # 상품 차단
+        cursor.execute("UPDATE product SET is_blocked = 1 WHERE id = ?", (target_id,))
+        db.commit()
+        flash(f"상품 '{product['title']}' 차단 완료")
+        return redirect(url_for('admin_panel'))
+
+    flash("신고 대상이 존재하지 않습니다.")
+    return redirect(url_for('admin_panel'))
+
+
 
 ##########보안 상 삭제하는 것이지만 과제제출이므로 주석처리로 삭제 표현
 #DB에 반영

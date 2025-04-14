@@ -20,7 +20,11 @@
 <h3>신고 목록</h3>
 <ul>
   {% for report in reports %}
-    <li>{{ report.target_id }} - {{ report.reason }}</li>
+    <li>
+      대상 ID: {{ report.target_id }}<br>
+      사유: {{ report.reason }}<br>
+      <a href="{{ url_for('process_report', report_id=report.id) }}">[신고 처리]</a>
+    </li>
   {% endfor %}
 </ul>
-{% endblock %}
+
