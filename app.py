@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, send
 #Flask-WTF 기반 Register Form 모듈
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
 
 app = Flask(__name__)
@@ -41,6 +41,11 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('로그인')
+
+#ProfileForm 클래스 정의의
+class ProfileForm(FlaskForm):
+    bio = TextAreaField('소개글', validators=[Length(max=500)])
+    submit = SubmitField('프로필 업데이트')
 
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
@@ -156,17 +161,24 @@ def dashboard():
 def profile():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+    
+    form = ProfileForm()
     db = get_db()
     cursor = db.cursor()
-    if request.method == 'POST':
-        bio = request.form.get('bio', '')
+
+    if request.method == 'POST' and form.validate_on_submit():
+        bio = form.bio.data
         cursor.execute("UPDATE user SET bio = ? WHERE id = ?", (bio, session['user_id']))
         db.commit()
         flash('프로필이 업데이트되었습니다.')
         return redirect(url_for('profile'))
+    
     cursor.execute("SELECT * FROM user WHERE id = ?", (session['user_id'],))
     current_user = cursor.fetchone()
-    return render_template('profile.html', user=current_user)
+
+    # bio 초기값 설정
+    form.bio.data = current_user['bio']
+    return render_template('profile.html', user=current_user, form = form)
 
 # 상품 등록
 @app.route('/product/new', methods=['GET', 'POST'])
