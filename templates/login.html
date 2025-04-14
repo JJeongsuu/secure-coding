@@ -2,9 +2,10 @@
 {% block title %}로그인{% endblock %}
 {% block content %}
 <h2>로그인</h2>
-<form method="post">
-  사용자명: <input type="text" name="username" required><br>
-  비밀번호: <input type="password" name="password" required><br>
-  <button type="submit">로그인</button>
+<form method="post" action="{{ url_for('login') }}">
+  {{ form.hidden_tag() }}  <!-- CSRF 토큰 필드 포함 -->
+  사용자명: {{ form.username(size=32) }}<br>
+  비밀번호: {{ form.password(size=32) }}<br>
+  {{ form.submit() }}
 </form>
 {% endblock %}

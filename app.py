@@ -36,6 +36,12 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     submit = SubmitField('회원가입')
 
+# LoginForm 클래스 정의
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('로그인')
+
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
     with app.app_context():
@@ -105,9 +111,10 @@ def register():
 # 로그인
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
         db = get_db()
         cursor = db.cursor()
         cursor.execute("SELECT * FROM user WHERE username = ?", (username,))
@@ -120,7 +127,7 @@ def login():
         else:
             flash('아이디 또는 비밀번호가 올바르지 않습니다.')
             return redirect(url_for('login'))
-    return render_template('login.html')
+    return render_template('login.html', form = form)
 
 # 로그아웃
 @app.route('/logout')
