@@ -87,6 +87,16 @@ class ReportForm(FlaskForm):
     ])
     submit = SubmitField('신고하기')
 
+#송금 클래스
+class TransferForm(FlaskForm):
+    receiver_username = StringField('받는 사용자명', validators=[DataRequired()])
+    amount = StringField('금액', validators=[
+        DataRequired(),
+        Regexp(r'^\d+$', message="숫자만 입력하세요.")
+    ])
+    submit = SubmitField('송금하기')
+
+
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
     with app.app_context():
@@ -294,7 +304,7 @@ def handle_send_message_event(data):
     data['message_id'] = str(uuid.uuid4())
     send(data, broadcast=True)
 
-
+#관리자 페이지지
 @app.route('/admin')
 def admin_panel():
     if 'user_id' not in session:
@@ -319,6 +329,66 @@ def admin_panel():
 
     return render_template("admin.html", users=users, products=products, reports=reports)
 
+#물건 검색 기능
+@app.route('/search')
+def search():
+    keyword = request.args.get('q', '').strip()
+
+    db = get_db()
+    cursor = db.cursor()
+
+    if keyword:
+        cursor.execute("SELECT * FROM product WHERE title LIKE ?", (f'%{keyword}%',))
+        results = cursor.fetchall()
+    else:
+        results = []
+
+    return render_template('search.html', keyword=keyword, results=results)
+
+
+#송금하기 
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    form = TransferForm()
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM user WHERE id = ?", (session['user_id'],))
+    sender = cursor.fetchone()
+
+    if form.validate_on_submit():
+        receiver_name = form.receiver_username.data
+        amount = int(form.amount.data)
+
+        if sender['username'] == receiver_name:
+            flash("자기 자신에게는 송금할 수 없습니다.")
+            return redirect(url_for('transfer'))
+
+        if sender['balance'] < amount:
+            flash("잔액이 부족합니다.")
+            return redirect(url_for('transfer'))
+
+        # 수신자 찾기
+        cursor.execute("SELECT * FROM user WHERE username = ?", (receiver_name,))
+        receiver = cursor.fetchone()
+
+        if not receiver:
+            flash("받는 사용자가 존재하지 않습니다.")
+            return redirect(url_for('transfer'))
+
+        # 송금 실행
+        cursor.execute("UPDATE user SET balance = balance - ? WHERE id = ?", (amount, sender['id']))
+        cursor.execute("UPDATE user SET balance = balance + ? WHERE id = ?", (amount, receiver['id']))
+        db.commit()
+
+        flash(f"{receiver_name}님에게 {amount}원 송금 완료!")
+        return redirect(url_for('dashboard'))
+
+    return render_template("transfer.html", form=form, balance=sender['balance'])
+
 
 
 ##########보안 상 삭제하는 것이지만 과제제출이므로 주석처리로 삭제 표현
@@ -335,7 +405,7 @@ def admin_panel():
 #        return "이미 존재/ 오류"
 
 
-#관리자 페이지
+#관리자 페이지db
 # @app.route('/create-admin')
 # def create_admin():
 #     db = get_db()
@@ -351,6 +421,19 @@ def admin_panel():
 #     )
 #     db.commit()
 #     return "관리자 계정 생성"
+
+#송금기능 db
+# @app.route('/add-balance-column')
+# def add_balance_column():
+#     db = get_db()
+#     cursor = db.cursor()
+#     try:
+#         cursor.execute("ALTER TABLE user ADD COLUMN balance INTEGER DEFAULT 10000")
+#         db.commit()
+#         return "balance 컬럼 추가 완료 초기값 10000원"
+#     except:
+#         return "이미 추가되어 있을 수 있음"
+
 
 if __name__ == '__main__':
     init_db()  # 앱 컨텍스트 내에서 테이블 생성

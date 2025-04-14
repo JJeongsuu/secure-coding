@@ -87,6 +87,12 @@
 </head>
 <body>
   <nav>
+    <!--로그인 여부 관계 없이 항상 보이는 검색창-->
+    <form action="{{ url_for('search') }}" method="get" style="display: inline;">
+      <input type="text" name="q" placeholder="상품 검색">
+      <button type="submit">검색</button>
+    </form>
+
     {% if session.get('user_id') %}
       <a href="{{ url_for('dashboard') }}">대시보드</a>
       <a href="{{ url_for('profile') }}">프로필</a>

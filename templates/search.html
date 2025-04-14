@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}검색 결과{% endblock %}
+{% block content %}
+<h2>🔍 "{{ keyword }}" 검색 결과</h2>
+
+{% if results %}
+  <ul>
+    {% for product in results %}
+      <li><strong>{{ product.title }}</strong> - {{ product.price }}원</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>검색 결과가 없습니다.</p>
+{% endif %}
+{% endblock %}
