@@ -2,6 +2,7 @@ import sqlite3
 import uuid
 #Hash 암호화
 import bcrypt
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from flask_socketio import SocketIO, send
 #Flask-WTF 기반 Register Form 모듈
@@ -9,12 +10,26 @@ from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Regexp
+from datetime import timedelta   #세션 시간위해서
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+
 csrf = CSRFProtect(app)   #csrf 활성화
 DATABASE = 'market.db'
 socketio = SocketIO(app)
+app.config['SECRET_KEY'] = os.urandom(24) 
+
+# 보안 세션 설정 추가
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SECURE'] = True  # HTTPS 환경에서만 동작
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+
+#세션 만료 시간 적용
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+
 
 # 데이터베이스 연결 관리: 요청마다 연결 생성 후 사용, 종료 시 close
 def get_db():

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}상품 상세보기 (관리자){% endblock %}
+{% block content %}
+<h2>{{ product.title }}</h2>
+
+<p><strong>설명:</strong> {{ product.description }}</p>
+<p><strong>가격:</strong> {{ product.price }}원</p>
+<p><strong>판매자:</strong> {{ seller.username if seller else '알 수 없음' }}</p>
+<p><strong>차단 여부:</strong>
+  {% if product.is_blocked %} 차단됨 {% else %} 정상 {% endif %}
+</p>
+
+<a href="{{ url_for('admin_panel') }}">← 관리자 페이지로 돌아가기</a>
+{% endblock %}
