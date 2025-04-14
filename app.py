@@ -366,21 +366,95 @@ def report():
     if form.validate_on_submit():
         target_id = html.escape(form.target_id.data.strip())
         reason = html.escape(form.reason.data.strip())
-        #감사 로그 기록
-        app.logger.info(
-        f"[신고 기록] 사용자 ID: {session['user_id']} → 대상 ID: {target_id} | 사유: {reason}"
-    )
         db = get_db()
         cursor = db.cursor()
-        report_id = str(uuid.uuid4())
+
+        # 하루 신고 횟수 제한
         cursor.execute(
-            "INSERT INTO report (id, reporter_id, target_id, reason) VALUES (?, ?, ?, ?)",
-            (report_id, session['user_id'], target_id, reason)
+            "SELECT COUNT(*) FROM report WHERE reporter_id = ? AND timestamp > datetime('now', '-1 day')",
+            (session['user_id'],)
+        )
+        count = cursor.fetchone()[0]
+        if count >= 5:
+            flash('하루 신고 가능 횟수를 초과했습니다.')
+            return redirect(url_for('dashboard'))
+
+        # 중복 신고 제한 (24시간 이내 동일 대상)
+        cursor.execute(
+            "SELECT * FROM report WHERE reporter_id = ? AND target_id = ? AND timestamp > datetime('now', '-1 day')",
+            (session['user_id'], target_id)
+        )
+        existing_report = cursor.fetchone()
+        if existing_report:
+            flash('이미 해당 대상을 최근에 신고한 기록이 있습니다.')
+            return redirect(url_for('dashboard'))
+
+        # 신고 저장
+        report_id = str(uuid.uuid4())
+        timestamp = datetime.now().isoformat()
+        status = "미처리"
+        cursor.execute(
+            "INSERT INTO report (id, reporter_id, target_id, reason, timestamp, status) VALUES (?, ?, ?, ?, ?, ?)",
+            (report_id, session['user_id'], target_id, reason, timestamp, status)
         )
         db.commit()
         flash('신고가 접수되었습니다.')
         return redirect(url_for('dashboard'))
-    return render_template('report.html', form = form)
+
+    return render_template('report.html', form=form)
+
+
+
+
+#관리자 라우트 신고목록 확인 / 상태 변경
+@app.route('/admin/reports')
+def admin_reports():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # 관리자 권한 확인
+    cursor.execute("SELECT is_admin FROM user WHERE id = ?", (session['user_id'],))
+    admin = cursor.fetchone()
+    if not admin or admin['is_admin'] != 1:
+        flash("접근 권한이 없습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 신고 목록 조회
+    cursor.execute("SELECT * FROM report ORDER BY timestamp DESC")
+    reports = cursor.fetchall()
+    return render_template('admin_reports.html', reports=reports)
+
+
+
+#관리자 상태 처리 라우트  
+@app.route('/admin/report/<report_id>/process', methods=['POST'])
+def process_report(report_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT is_admin FROM user WHERE id = ?", (session['user_id'],))
+    admin = cursor.fetchone()
+    if not admin or admin['is_admin'] != 1:
+        flash("권한 없음")
+        return redirect(url_for('dashboard'))
+
+    new_status = request.form.get('status')
+    if new_status not in ['처리됨', '무시됨']:  # 허용된 상태만
+        flash("잘못된 상태입니다.")
+        return redirect(url_for('admin_reports'))
+
+    cursor.execute("UPDATE report SET status = ? WHERE id = ?", (new_status, report_id))
+    db.commit()
+    flash("신고 상태 변경 완료")
+    return redirect(url_for('admin_reports'))
+
+
+
 
 # 실시간 채팅: 클라이언트가 메시지를 보내면 전체 브로드캐스트
 @socketio.on('send_message')
@@ -521,8 +595,8 @@ def transfer():
     return render_template("transfer.html", form=form, balance=sender['balance'])
 
 #관리자 페이지 --> 관리자가 사용자, 물건 신고 
-@app.route('/admin/process_report/<report_id>')
-def process_report(report_id):
+@app.route('/admin/block_target/<report_id>')
+def block_target(report_id):
     db = get_db()
     cursor = db.cursor()
 

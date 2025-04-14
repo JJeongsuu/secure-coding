@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}신고 목록{% endblock %}
+{% block content %}
+<h2>신고 목록</h2>
+
+<ul>
+  {% for report in reports %}
+    <li>
+      <strong>대상:</strong> {{ report.target_id }}<br>
+      <strong>사유:</strong> {{ report.reason }}<br>
+      <strong>신고자:</strong> {{ report.reporter_id }}<br>
+      <strong>시간:</strong> {{ report.timestamp }}<br>
+      <strong>상태:</strong> {{ report.status }}<br>
+
+      {% if report.status != '처리됨' %}
+        <form method="post" action="{{ url_for('process_report', report_id=report.id) }}">
+          {{ csrf_token() }}
+          <select name="status">
+            <option value="처리됨">처리됨</option>
+            <option value="무시됨">무시됨</option>
+          </select>
+          <button type="submit">변경</button>
+        </form>
+      {% else %}
+        <em>이미 처리됨</em>
+      {% endif %}
+    </li>
+    <hr>
+  {% endfor %}
+</ul>
+{% endblock %}

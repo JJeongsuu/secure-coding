@@ -2,11 +2,27 @@
 {% block title %}신고하기{% endblock %}
 {% block content %}
 <h2>신고하기</h2>
+
+{# 플래시 메시지 출력 (예: 중복 신고, 횟수 제한 안내 등) #}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <form method="post" action="{{ url_for('report') }}">
-  {{ form.hidden_tag() }}  <!-- CSRF 토큰 포함 -->
-  신고 대상 (사용자ID 또는 상품ID): {{ form.target_id(size=40) }}<br>
-  신고 사유: <br>
-  {{ form.reason(rows=4, cols=50) }}<br>
-  <button type="submit">신고 접수</button>
+  {{ form.hidden_tag() }}  {# CSRF 토큰 포함 #}
+
+  <label>신고 대상 (사용자ID 또는 상품ID):</label><br>
+  {{ form.target_id(size=40) }}<br><br>
+
+  <label>신고 사유:</label><br>
+  {{ form.reason(rows=4, cols=50) }}<br><br>
+
+  {{ form.submit() }}
 </form>
 {% endblock %}
