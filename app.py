@@ -54,6 +54,11 @@ class ProductForm(FlaskForm):
     price = StringField('가격', validators=[DataRequired()])
     submit = SubmitField('상품 등록')
 
+#신고페이지 클래스 정의 
+class ReportForm(FlaskForm):
+    target_id = StringField('신고 대상 ID', validators=[DataRequired()])
+    reason = TextAreaField('신고 사유', validators=[DataRequired()])
+    submit = SubmitField('신고하기')
 
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
@@ -232,9 +237,12 @@ def view_product(product_id):
 def report():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    if request.method == 'POST':
-        target_id = request.form['target_id']
-        reason = request.form['reason']
+    
+    form = ReportForm()
+
+    if form.validate_on_submit():
+        target_id = form.target_id.data
+        reason = form.reason.data
         db = get_db()
         cursor = db.cursor()
         report_id = str(uuid.uuid4())
@@ -245,7 +253,7 @@ def report():
         db.commit()
         flash('신고가 접수되었습니다.')
         return redirect(url_for('dashboard'))
-    return render_template('report.html')
+    return render_template('report.html', form = form)
 
 # 실시간 채팅: 클라이언트가 메시지를 보내면 전체 브로드캐스트
 @socketio.on('send_message')
