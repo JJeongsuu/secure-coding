@@ -100,7 +100,7 @@ def register():
         db.commit()
         flash('회원가입이 완료되었습니다. 로그인 해주세요.')
         return redirect(url_for('login'))
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 # 로그인
 @app.route('/login', methods=['GET', 'POST'])
