@@ -1,11 +1,18 @@
 import sqlite3
 import uuid
+#Hash 암호화
 import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from flask_socketio import SocketIO, send
+#Flask-WTF 기반 Register Form 모듈
+from flask_wtf import FlaskForm
+from flask_wtf.csrf import CSRFProtect
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
+csrf = CSRFProtect(app)   #csrf 활성화
 DATABASE = 'market.db'
 socketio = SocketIO(app)
 
@@ -22,6 +29,12 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
+
+# RegisterForm 클래스 정의
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    submit = SubmitField('회원가입')
 
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
@@ -68,9 +81,10 @@ def index():
 # 회원가입
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    form = RegisterForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
         db = get_db()
         cursor = db.cursor()
         # 중복 사용자 체크
