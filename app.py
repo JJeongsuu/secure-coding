@@ -12,7 +12,6 @@ from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Regexp
 from datetime import timedelta   #세션 시간위해서
 
-
 app = Flask(__name__)
 
 csrf = CSRFProtect(app)   #csrf 활성화
