@@ -10,11 +10,7 @@
       <!-- 유저 상세 보기 링크 -->
       <a href="{{ url_for('view_user', user_id=user.id) }}">{{ user.username }}</a>
       {% if user.is_admin %} (관리자){% endif %}
-      {% if user.is_blocked %} 🔒 차단됨 {% endif %}
-      <!-- 차단 버튼 -->
-      {% if not user.is_blocked %}
-        <a href="{{ url_for('block_user', user_id=user.id) }}">[차단]</a>
-      {% endif %}
+      {% if user.is_blocked %} 차단됨 {% endif %}
     </li>
   {% endfor %}
 </ul>
