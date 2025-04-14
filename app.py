@@ -42,10 +42,18 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('로그인')
 
-#ProfileForm 클래스 정의의
+#ProfileForm 클래스 정의
 class ProfileForm(FlaskForm):
     bio = TextAreaField('소개글', validators=[Length(max=500)])
     submit = SubmitField('프로필 업데이트')
+
+#상품등록 클래스 정의
+class ProductForm(FlaskForm):
+    title = StringField('제목', validators=[DataRequired()])
+    description = TextAreaField('설명', validators=[DataRequired()])
+    price = StringField('가격', validators=[DataRequired()])
+    submit = SubmitField('상품 등록')
+
 
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
@@ -185,10 +193,13 @@ def profile():
 def new_product():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        price = request.form['price']
+    
+    form = ProductForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        description = form.description.data
+        price = form.price.data
         db = get_db()
         cursor = db.cursor()
         product_id = str(uuid.uuid4())
@@ -199,7 +210,7 @@ def new_product():
         db.commit()
         flash('상품이 등록되었습니다.')
         return redirect(url_for('dashboard'))
-    return render_template('new_product.html')
+    return render_template('new_product.html', form = form)
 
 # 상품 상세보기
 @app.route('/product/<product_id>')
