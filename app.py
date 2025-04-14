@@ -1,5 +1,6 @@
 import sqlite3
 import uuid
+import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from flask_socketio import SocketIO, send
 
@@ -78,8 +79,10 @@ def register():
             flash('이미 존재하는 사용자명입니다.')
             return redirect(url_for('register'))
         user_id = str(uuid.uuid4())
+        hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
         cursor.execute("INSERT INTO user (id, username, password) VALUES (?, ?, ?)",
-                       (user_id, username, password))
+                    (user_id, username, hashed_pw))
+
         db.commit()
         flash('회원가입이 완료되었습니다. 로그인 해주세요.')
         return redirect(url_for('login'))
@@ -93,9 +96,10 @@ def login():
         password = request.form['password']
         db = get_db()
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM user WHERE username = ? AND password = ?", (username, password))
+        cursor.execute("SELECT * FROM user WHERE username = ?", (username,))
         user = cursor.fetchone()
-        if user:
+        if user and bcrypt.checkpw(password.encode(), user['password']):
+            session.clear()  # session fixation 방지
             session['user_id'] = user['id']
             flash('로그인 성공!')
             return redirect(url_for('dashboard'))
@@ -107,7 +111,7 @@ def login():
 # 로그아웃
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.clear()
     flash('로그아웃되었습니다.')
     return redirect(url_for('index'))
 
