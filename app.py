@@ -115,6 +115,9 @@ class TransferForm(FlaskForm):
     password = PasswordField('비밀번호 확인', validators=[DataRequired()])
     submit = SubmitField('송금하기')
 
+#상품 등록 세부정보 삭제 클래스
+class DeleteForm(FlaskForm):
+    submit = SubmitField('삭제')
 
 # 테이블 생성 (최초 실행 시에만)
 def init_db():
@@ -290,6 +293,10 @@ def new_product():
 # 상품 상세보기
 @app.route('/product/<product_id>')
 def view_product(product_id):
+    if 'user_id' not in session:
+        flash("로그인 필요")
+        return redirect(url_for('login'))
+    
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM product WHERE id = ?", (product_id,))
@@ -300,7 +307,39 @@ def view_product(product_id):
     # 판매자 정보 조회
     cursor.execute("SELECT * FROM user WHERE id = ?", (product['seller_id'],))
     seller = cursor.fetchone()
-    return render_template('view_product.html', product=product, seller=seller)
+    return render_template('view_product.html', product=product, seller=seller, form=DeleteForm())
+
+#상세정보 수정
+@app.route('/product/<product_id>/edit', methods=['GET', 'POST'])
+def edit_product(product_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM product WHERE id = ?", (product_id,))
+    product = cursor.fetchone()
+
+    # 접근 권한 체크
+    if not product or product['seller_id'] != session['user_id']:
+        flash('수정 권한이 없습니다.')
+        return redirect(url_for('dashboard'))
+
+    form = ProductForm(data=product)
+    if form.validate_on_submit():
+        title = form.title.data
+        description = form.description.data
+        price = form.price.data
+        cursor.execute(
+            "UPDATE product SET title=?, description=?, price=? WHERE id=?",
+            (title, description, price, product_id)
+        )
+        db.commit()
+        flash('상품이 수정되었습니다.')
+        return redirect(url_for('view_product', product_id=product_id))
+
+    return render_template('edit_product.html', form=form, product=product)
+
 
 # 신고하기
 @app.route('/report', methods=['GET', 'POST'])
@@ -331,7 +370,7 @@ def handle_send_message_event(data):
     data['message_id'] = str(uuid.uuid4())
     send(data, broadcast=True)
 
-#관리자 페이지지
+#관리자 페이지
 @app.route('/admin')
 def admin_panel():
     if 'user_id' not in session:
@@ -501,6 +540,36 @@ def view_user(user_id):
         return redirect(url_for('admin_panel'))
 
     return render_template("user_detail.html", user=user)
+
+#작성자가 상세정보에서 내역 삭제할 수 있도록 
+@app.route('/product/delete/<product_id>', methods=['POST'])
+def delete_product(product_id):
+    if 'user_id' not in session:
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # 상품 존재 여부 확인
+    cursor.execute("SELECT * FROM product WHERE id = ?", (product_id,))
+    product = cursor.fetchone()
+
+    if not product:
+        flash("상품이 존재하지 않습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 작성자 본인 확인
+    if product['seller_id'] != session['user_id']:
+        flash("삭제 권한이 없습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 삭제 수행
+    cursor.execute("DELETE FROM product WHERE id = ?", (product_id,))
+    db.commit()
+    flash("상품이 삭제되었습니다.")
+    return redirect(url_for('dashboard'))
+
 
 #사용자에게 에러 보여주기
 @app.errorhandler(500)
