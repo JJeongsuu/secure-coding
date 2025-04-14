@@ -8,7 +8,7 @@ from flask_socketio import SocketIO, send
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, Regexp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -32,14 +32,27 @@ def close_connection(exception):
 
 # RegisterForm 클래스 정의
 class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    username = StringField('사용자명', validators=[
+        DataRequired(), 
+        Length(min=3, max=20), 
+        Regexp(r'^[a-zA-Z0-9_]+$', message="영문, 숫자, 언더스코어만 허용됩니다.")
+    ])
+    password = PasswordField('비밀번호', validators=[
+        DataRequired(), 
+        Length(min=6, max=100)
+    ])
     submit = SubmitField('회원가입')
 
 # LoginForm 클래스 정의
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('사용자명', validators=[
+        DataRequired(),
+        Length(min=6, max=100)
+    ])
+    password = PasswordField('비밀번호', validators=[
+        DataRequired(),
+        Length(min=6, max=100)
+    ])
     submit = SubmitField('로그인')
 
 #ProfileForm 클래스 정의
@@ -49,15 +62,29 @@ class ProfileForm(FlaskForm):
 
 #상품등록 클래스 정의
 class ProductForm(FlaskForm):
-    title = StringField('제목', validators=[DataRequired()])
-    description = TextAreaField('설명', validators=[DataRequired()])
-    price = StringField('가격', validators=[DataRequired()])
+    title = StringField('제목', validators=[
+        DataRequired(),
+        Length(max=50)
+    ])
+    description = TextAreaField('설명', validators=[
+        DataRequired(),
+        Length(max=1000)])
+    price = StringField('가격', validators=[
+        DataRequired(),
+        Regexp(r'^\d+(\.\d{1,2})?$', message="가격은 숫자 형식이어야 합니다.")
+    ])
     submit = SubmitField('상품 등록')
 
 #신고페이지 클래스 정의 
 class ReportForm(FlaskForm):
-    target_id = StringField('신고 대상 ID', validators=[DataRequired()])
-    reason = TextAreaField('신고 사유', validators=[DataRequired()])
+    target_id = StringField('신고 대상 ID', validators=[
+        DataRequired(),
+        Length(min=4)
+    ])
+    reason = TextAreaField('신고 사유', validators=[
+        DataRequired(),
+        Length(min=5, max=500)
+    ])
     submit = SubmitField('신고하기')
 
 # 테이블 생성 (최초 실행 시에만)
