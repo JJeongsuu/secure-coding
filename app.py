@@ -3,14 +3,18 @@ import uuid
 #Hash 암호화
 import bcrypt
 import os
+import html
+import time
+import logging
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 #Flask-WTF 기반 Register Form 모듈
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Regexp
 from datetime import timedelta   #세션 시간위해서
+from datetime import datetime
 from time import sleep
 
 
@@ -25,6 +29,16 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SECURE'] = True  # HTTPS 환경에서만 동작
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+
+last_message_time = {}
+MESSAGE_COOLDOWN = 1.5
+
+# 신고관련 로그 파일 저장 설정
+logging.basicConfig(
+    filename='report_audit.log',
+    level=logging.INFO,
+    format='[%(asctime)s] %(message)s'
+)
 
 #세션 만료 시간 적용
 @app.before_request
@@ -350,8 +364,12 @@ def report():
     form = ReportForm()
 
     if form.validate_on_submit():
-        target_id = form.target_id.data
-        reason = form.reason.data
+        target_id = html.escape(form.target_id.data.strip())
+        reason = html.escape(form.reason.data.strip())
+        #감사 로그 기록
+        app.logger.info(
+        f"[신고 기록] 사용자 ID: {session['user_id']} → 대상 ID: {target_id} | 사유: {reason}"
+    )
         db = get_db()
         cursor = db.cursor()
         report_id = str(uuid.uuid4())
@@ -367,8 +385,49 @@ def report():
 # 실시간 채팅: 클라이언트가 메시지를 보내면 전체 브로드캐스트
 @socketio.on('send_message')
 def handle_send_message_event(data):
+    if 'user_id' not in session:
+        emit('error', {'error': '로그인이 필요합니다.'}, room=request.sid)
+        return
+
+    user_id = session['user_id']
+    now = time.time()
+
+    # 메시지 속도 제한 (스팸 방지)
+    last_time = last_message_time.get(user_id, 0)
+    if now - last_time < MESSAGE_COOLDOWN:
+        emit('error', {'error': '메시지를 너무 자주 보낼 수 없습니다.'}, room=request.sid)
+        return
+    last_message_time[user_id] = now  # 현재 시간 저장
+
+    # 구조 검증
+    if not isinstance(data, dict) or 'message' not in data:
+        emit('error', {'error': '잘못된 데이터 형식입니다.'}, room=request.sid)
+        return
+
+    message = data.get('message', '').strip()
+
+    # 타입 체크
+    if not isinstance(message, str):
+        emit('error', {'error': '메시지는 문자열이어야 합니다.'}, room=request.sid)
+        return
+
+    # 길이 제한
+    if not message or len(message) > 200:
+        emit('error', {'error': '메시지는 1~200자여야 합니다.'}, room=request.sid)
+        return
+
+    # XSS 방지 이스케이프 처리
+    safe_message = html.escape(message)
+
+    # 안전하게 재구성된 데이터 전송
+    data['message'] = safe_message
     data['message_id'] = str(uuid.uuid4())
+    data['user_id'] = user_id
+
     send(data, broadcast=True)
+
+
+
 
 #관리자 페이지
 @app.route('/admin')
