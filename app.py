@@ -502,6 +502,15 @@ def view_user(user_id):
 
     return render_template("user_detail.html", user=user)
 
+#사용자에게 에러 보여주기
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("500.html"), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template("404.html"), 404
+
 
 ##########보안 상 삭제하는 것이지만 과제제출이므로 주석처리로 삭제 표현
 #DB에 반영
@@ -546,10 +555,9 @@ def view_user(user_id):
 #     except:
 #         return "이미 추가되어 있을 수 있음"
 
-
 if __name__ == '__main__':
     init_db()  # 앱 컨텍스트 내에서 테이블 생성
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=False)
 
 
 
