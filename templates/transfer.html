@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}송금하기{% endblock %}
+{% block content %}
+<h2>송금하기</h2>
+<p>내 잔액: {{ balance }}원</p>
+<form method="post" action="{{ url_for('transfer') }}">
+  {{ form.hidden_tag() }}
+  받는 사용자명: {{ form.receiver_username(size=30) }}<br>
+  금액: {{ form.amount(size=10) }} 원<br>
+  {{ form.submit() }}
+</form>
+{% endblock %}
