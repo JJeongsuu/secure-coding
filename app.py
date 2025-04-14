@@ -53,7 +53,9 @@ class RegisterForm(FlaskForm):
     ])
     password = PasswordField('비밀번호', validators=[
         DataRequired(), 
-        Length(min=6, max=100)
+        Length(min=6, max=100),
+        Regexp(r'^(?=.*[A-Za-z])(?=.*\d).{8,}$', 
+        message="비밀번호는 문자와 숫자를 포함해야 합니다.")
     ])
     submit = SubmitField('회원가입')
 
