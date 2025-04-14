@@ -6,9 +6,19 @@
 <h3>사용자 목록</h3>
 <ul>
   {% for user in users %}
-    <li>{{ user.username }}{% if user.is_admin %} (관리자){% endif %}</li>
+    <li>
+      <!-- 유저 상세 보기 링크 -->
+      <a href="{{ url_for('view_user', user_id=user.id) }}">{{ user.username }}</a>
+      {% if user.is_admin %} (관리자){% endif %}
+      {% if user.is_blocked %} 🔒 차단됨 {% endif %}
+      <!-- 차단 버튼 -->
+      {% if not user.is_blocked %}
+        <a href="{{ url_for('block_user', user_id=user.id) }}">[차단]</a>
+      {% endif %}
+    </li>
   {% endfor %}
 </ul>
+
 
 <h3>상품 목록</h3>
 <ul>
@@ -24,9 +34,12 @@
       대상 ID: {{ report.target_id }}<br>
       사유: {{ report.reason }}<br>
       <a href="{{ url_for('process_report', report_id=report.id) }}">[신고 처리]</a>
+      <a href="{{ url_for('delete_report', report_id=report.id) }}">[신고 삭제]</a>
     </li>
   {% endfor %}
 </ul>
+
+
 
 
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}사용자 상세 정보{% endblock %}
+{% block content %}
+<h2>사용자 상세 정보</h2>
+
+<ul>
+  <li><strong>아이디:</strong> {{ user.username }}</li>
+  <li><strong>소개글:</strong> {{ user.bio or '없음' }}</li>
+  <li><strong>잔액:</strong> {{ user.balance }}원</li>
+  <li><strong>차단 여부:</strong> 
+    {% if user.is_blocked %} 차단됨 {% else %} 정상 {% endif %}
+  </li>
+</ul>
+
+<a href="{{ url_for('admin_panel') }}">← 관리자 페이지로 돌아가기</a>
+{% endblock %}

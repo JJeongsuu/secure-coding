@@ -389,7 +389,7 @@ def transfer():
 
     return render_template("transfer.html", form=form, balance=sender['balance'])
 
-
+#관리자 페이지 --> 관리자가 사용자, 물건 신고 
 @app.route('/admin/process_report/<report_id>')
 def process_report(report_id):
     db = get_db()
@@ -429,6 +429,45 @@ def process_report(report_id):
     flash("신고 대상이 존재하지 않습니다.")
     return redirect(url_for('admin_panel'))
 
+
+#관리자 페이지 --> 신고 삭제하기 (신고 취소하기)
+@app.route('/admin/delete_report/<report_id>')
+def delete_report(report_id):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("DELETE FROM report WHERE id = ?", (report_id,))
+    db.commit()
+
+    flash("신고가 삭제되었습니다.")
+    return redirect(url_for('admin_panel'))
+
+
+#관리자 --> 사용자 상세 보기
+@app.route('/admin/user/<user_id>')
+def view_user(user_id):
+    db = get_db()
+    cursor = db.cursor()
+
+    # 로그인한 사용자가 관리자여야 함
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    cursor.execute("SELECT * FROM user WHERE id = ?", (session['user_id'],))
+    admin = cursor.fetchone()
+    if not admin or admin['is_admin'] != 1:
+        flash("접근 권한이 없습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 조회할 유저 정보
+    cursor.execute("SELECT * FROM user WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+
+    if not user:
+        flash("해당 사용자가 존재하지 않습니다.")
+        return redirect(url_for('admin_panel'))
+
+    return render_template("user_detail.html", user=user)
 
 
 ##########보안 상 삭제하는 것이지만 과제제출이므로 주석처리로 삭제 표현
