@@ -795,6 +795,15 @@ def ensure_user_columns():
     db.commit()
 
 
+#Content-Security-Policy, X-Frame-Options, X-Content-Type-Options 보안 헤더 적용
+@app.after_request
+def set_security_headers(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    return response
+
+
 if __name__ == '__main__':
     init_db()  # 앱 컨텍스트 내에서 테이블 생성
     with app.app_context():

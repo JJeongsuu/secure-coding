@@ -383,3 +383,25 @@ jinja2.exceptions.TemplateNotFound: 404.html
 [2025-04-15 11:19:02,080] 127.0.0.1 - - [15/Apr/2025 11:19:02] "GET /socket.io/?EIO=4&transport=polling&t=POtFYO-&sid=ab8r2cNxUPCULWaaAAAA HTTP/1.1" 200 -
 [2025-04-15 11:19:37,409]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
 [2025-04-15 11:19:37,466]  * Restarting with stat
+[2025-04-15 11:21:07,581] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:21:07,581] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:21:07,581]  * Restarting with stat
+[2025-04-15 11:21:08,281]  * Debugger is active!
+[2025-04-15 11:21:08,286]  * Debugger PIN: 457-375-942
+[2025-04-15 11:21:10,729] 127.0.0.1 - - [15/Apr/2025 11:21:10] "GET /socket.io/?EIO=4&transport=polling&t=POtG1kJ HTTP/1.1" 200 -
+[2025-04-15 11:21:10,998] 127.0.0.1 - - [15/Apr/2025 11:21:10] "POST /socket.io/?EIO=4&transport=polling&t=POtG1pD&sid=6HRtYrVIb4iXjgn1AAAA HTTP/1.1" 200 -
+[2025-04-15 11:21:11,048] 127.0.0.1 - - [15/Apr/2025 11:21:11] "GET /socket.io/?EIO=4&transport=polling&t=POtG1pD.0&sid=6HRtYrVIb4iXjgn1AAAA HTTP/1.1" 200 -
+[2025-04-15 11:21:11,048] 127.0.0.1 - - [15/Apr/2025 11:21:11] "GET /socket.io/?EIO=4&transport=polling&t=POtG1uG&sid=6HRtYrVIb4iXjgn1AAAA HTTP/1.1" 200 -
+[2025-04-15 11:21:13,446] 127.0.0.1 - - [15/Apr/2025 11:21:13] "GET /socket.io/?EIO=4&transport=websocket&sid=6HRtYrVIb4iXjgn1AAAA HTTP/1.1" 200 -
+[2025-04-15 11:21:13,762] 127.0.0.1 - - [15/Apr/2025 11:21:13] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+[2025-04-15 11:21:13,774] 127.0.0.1 - - [15/Apr/2025 11:21:13] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:21:21,043] 127.0.0.1 - - [15/Apr/2025 11:21:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 11:21:21,160] 127.0.0.1 - - [15/Apr/2025 11:21:21] "GET /admin HTTP/1.1" 200 -
+[2025-04-15 11:30:01,140] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:30:01,140] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:30:01,141]  * Restarting with stat
+[2025-04-15 11:30:01,903]  * Debugger is active!
+[2025-04-15 11:30:01,903]  * Debugger PIN: 457-375-942
+[2025-04-15 11:31:45,013] 127.0.0.1 - - [15/Apr/2025 11:31:45] "HEAD / HTTP/1.1" 200 -
