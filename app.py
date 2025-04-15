@@ -11,11 +11,12 @@ from flask_socketio import SocketIO, send, emit
 #Flask-WTF 기반 Register Form 모듈
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired, Length, Regexp
 from datetime import timedelta   #세션 시간위해서
 from datetime import datetime
 from time import sleep
+
 
 
 app = Flask(__name__)
@@ -118,6 +119,13 @@ class ReportForm(FlaskForm):
         Length(min=5, max=500)
     ])
     submit = SubmitField('신고하기')
+
+#관리자 신고페이지
+class ReportStatusForm(FlaskForm):
+    report_id = HiddenField()
+    status = SelectField('상태', choices=[('처리됨', '처리됨'), ('무시됨', '무시됨'), ('미처리', '미처리')])
+    submit = SubmitField('변경')
+
 
 #송금 클래스
 class TransferForm(FlaskForm):
@@ -436,7 +444,16 @@ def admin_reports():
     # 신고 목록 조회
     cursor.execute("SELECT * FROM report ORDER BY timestamp DESC")
     reports = cursor.fetchall()
-    return render_template('admin_reports.html', reports=reports)
+
+
+    # 각 신고 항목에 대한 폼 생성
+    form_dict = {}
+    for report in reports:
+        form = ReportStatusForm()
+        form.report_id.data = report['id']
+        form_dict[str(report['id'])] = form
+
+    return render_template('admin_reports.html', reports=reports, form_dict=form_dict)
 
 
 
@@ -454,14 +471,15 @@ def process_report(report_id):
         flash("권한 없음")
         return redirect(url_for('dashboard'))
 
-    new_status = request.form.get('status')
-    if new_status not in ['처리됨', '무시됨']:  # 허용된 상태만
-        flash("잘못된 상태입니다.")
-        return redirect(url_for('admin_reports'))
+    form = ReportStatusForm()
+    if form.validate_on_submit():
+        nnew_status = form.status.data
+        cursor.execute("UPDATE report SET status = ? WHERE id = ?", (new_status, report_id))
+        db.commit()
+        flash("신고 상태가 변경되었습니다.")
+    else:
+        flash("폼 제출에 문제가 발생했습니다.")
 
-    cursor.execute("UPDATE report SET status = ? WHERE id = ?", (new_status, report_id))
-    db.commit()
-    flash("신고 상태 변경 완료")
     return redirect(url_for('admin_reports'))
 
 
@@ -534,7 +552,7 @@ def admin_panel():
     users = cursor.fetchall()
     cursor.execute("SELECT * FROM product")
     products = cursor.fetchall()
-    cursor.execute("SELECT * FROM report")
+    cursor.execute("SELECT * FROM report ORDER BY timestamp DESC")
     reports = cursor.fetchall()
 
     return render_template("admin.html", users=users, products=products, reports=reports)

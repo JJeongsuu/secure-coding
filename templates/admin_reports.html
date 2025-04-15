@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}신고 목록{% endblock %}
 {% block content %}
+
+
 <h2>신고 목록</h2>
 
 <ul>
@@ -14,12 +16,10 @@
 
       {% if report.status != '처리됨' %}
         <form method="post" action="{{ url_for('process_report', report_id=report.id) }}">
-          {{ csrf_token() }}
-          <select name="status">
-            <option value="처리됨">처리됨</option>
-            <option value="무시됨">무시됨</option>
-          </select>
-          <button type="submit">변경</button>
+          {{ form_dict[report.id|string].hidden_tag() }}
+          {{ form_dict[report.id|string].report_id(value=report.id) }}
+          {{ form_dict[report.id|string].status }}
+          {{ form_dict[report.id|string].submit }}
         </form>
       {% else %}
         <em>이미 처리됨</em>
@@ -28,4 +28,10 @@
     <hr>
   {% endfor %}
 </ul>
+
+
+<p>
+  <a href="{{ url_for('admin_panel') }}">← 관리자 페이지로 돌아가기</a>
+</p>
+
 {% endblock %}
