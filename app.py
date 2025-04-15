@@ -408,7 +408,7 @@ def report():
         db.commit()
 
         # 감사 로그 남기기
-        l# 민감한 신고 사유 마스킹
+        # 민감한 신고 사유 마스킹
         masked_reason = reason[:20].replace("\n", " ").replace("\r", " ")
         if len(reason) > 20:
             masked_reason += "..."
@@ -474,7 +474,7 @@ def process_report(report_id):
     form = ReportStatusForm()
     if form.validate_on_submit():
         nnew_status = form.status.data
-        cursor.execute("UPDATE report SET status = ? WHERE id = ?", (new_status, report_id))
+        cursor.execute("UPDATE report SET status = ? WHERE id = ?", (nnew_status, report_id))
         db.commit()
         flash("신고 상태가 변경되었습니다.")
     else:

@@ -539,3 +539,105 @@ jinja2.exceptions.TemplateNotFound: 404.html
 [2025-04-15 17:26:51,379] 127.0.0.1 - - [15/Apr/2025 17:26:51] "[36mGET /admin/reports?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
 [2025-04-15 17:27:57,182]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
 [2025-04-15 17:27:57,244]  * Restarting with stat
+[2025-04-15 17:29:32,203] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 17:29:32,203] [33mPress CTRL+C to quit[0m
+[2025-04-15 17:29:32,203]  * Restarting with stat
+[2025-04-15 17:29:32,945]  * Debugger is active!
+[2025-04-15 17:29:32,950]  * Debugger PIN: 457-375-942
+[2025-04-15 17:29:36,276] 127.0.0.1 - - [15/Apr/2025 17:29:36] "[32mGET /admin HTTP/1.1[0m" 302 -
+[2025-04-15 17:29:36,544] 127.0.0.1 - - [15/Apr/2025 17:29:36] "GET /login HTTP/1.1" 200 -
+[2025-04-15 17:29:43,364] 127.0.0.1 - - [15/Apr/2025 17:29:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 17:29:43,477] 127.0.0.1 - - [15/Apr/2025 17:29:43] "GET /admin HTTP/1.1" 200 -
+[2025-04-15 17:29:47,150] 127.0.0.1 - - [15/Apr/2025 17:29:47] "GET /admin/reports HTTP/1.1" 200 -
+[2025-04-15 17:29:51,051] 127.0.0.1 - - [15/Apr/2025 17:29:51] "GET /admin HTTP/1.1" 200 -
+[2025-04-15 17:29:54,546] 127.0.0.1 - - [15/Apr/2025 17:29:54] "[32mGET /logout HTTP/1.1[0m" 302 -
+[2025-04-15 17:29:54,858] 127.0.0.1 - - [15/Apr/2025 17:29:54] "GET / HTTP/1.1" 200 -
+[2025-04-15 17:29:56,460] 127.0.0.1 - - [15/Apr/2025 17:29:56] "GET /login HTTP/1.1" 200 -
+[2025-04-15 17:30:01,963] 127.0.0.1 - - [15/Apr/2025 17:30:01] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 17:30:02,048] 127.0.0.1 - - [15/Apr/2025 17:30:02] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:30:02,367] 127.0.0.1 - - [15/Apr/2025 17:30:02] "GET /socket.io/?EIO=4&transport=polling&t=POuaSzD HTTP/1.1" 200 -
+[2025-04-15 17:30:02,625] 127.0.0.1 - - [15/Apr/2025 17:30:02] "POST /socket.io/?EIO=4&transport=polling&t=POuaT22&sid=3IL1hUgUXdf2rnihAAAA HTTP/1.1" 200 -
+[2025-04-15 17:30:02,673] 127.0.0.1 - - [15/Apr/2025 17:30:02] "GET /socket.io/?EIO=4&transport=polling&t=POuaT23&sid=3IL1hUgUXdf2rnihAAAA HTTP/1.1" 200 -
+[2025-04-15 17:30:02,673] 127.0.0.1 - - [15/Apr/2025 17:30:02] "GET /socket.io/?EIO=4&transport=polling&t=POuaT6s&sid=3IL1hUgUXdf2rnihAAAA HTTP/1.1" 200 -
+[2025-04-15 17:30:05,541] 127.0.0.1 - - [15/Apr/2025 17:30:05] "GET /socket.io/?EIO=4&transport=websocket&sid=3IL1hUgUXdf2rnihAAAA HTTP/1.1" 200 -
+[2025-04-15 17:30:05,723] 127.0.0.1 - - [15/Apr/2025 17:30:05] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:30:11,144] 127.0.0.1 - - [15/Apr/2025 17:30:11] "[32mPOST /report HTTP/1.1[0m" 302 -
+[2025-04-15 17:30:11,148] 127.0.0.1 - - [15/Apr/2025 17:30:11] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:30:11,478] 127.0.0.1 - - [15/Apr/2025 17:30:11] "GET /socket.io/?EIO=4&transport=polling&t=POuaVBN HTTP/1.1" 200 -
+[2025-04-15 17:30:11,734] 127.0.0.1 - - [15/Apr/2025 17:30:11] "POST /socket.io/?EIO=4&transport=polling&t=POuaVGO&sid=niHjNwkNo-0d0oSrAAAC HTTP/1.1" 200 -
+[2025-04-15 17:30:11,796] 127.0.0.1 - - [15/Apr/2025 17:30:11] "GET /socket.io/?EIO=4&transport=polling&t=POuaVGP&sid=niHjNwkNo-0d0oSrAAAC HTTP/1.1" 200 -
+[2025-04-15 17:30:16,261] 127.0.0.1 - - [15/Apr/2025 17:30:16] "GET /socket.io/?EIO=4&transport=websocket&sid=niHjNwkNo-0d0oSrAAAC HTTP/1.1" 200 -
+[2025-04-15 17:30:16,268] 127.0.0.1 - - [15/Apr/2025 17:30:16] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:30:33,925] 127.0.0.1 - - [15/Apr/2025 17:30:33] "[35m[1mPOST /report HTTP/1.1[0m" 500 -
+[2025-04-15 17:30:34,399] 127.0.0.1 - - [15/Apr/2025 17:30:34] "GET /report?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+[2025-04-15 17:30:34,422] 127.0.0.1 - - [15/Apr/2025 17:30:34] "GET /report?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+[2025-04-15 17:30:34,754] 127.0.0.1 - - [15/Apr/2025 17:30:34] "GET /report?__debugger__=yes&cmd=resource&f=console.png&s=bAx15OhkuWrNwuQ392rH HTTP/1.1" 200 -
+[2025-04-15 17:30:35,002] 127.0.0.1 - - [15/Apr/2025 17:30:35] "GET /report?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+[2025-04-15 17:30:40,452] 127.0.0.1 - - [15/Apr/2025 17:30:40] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:30:45,966] 127.0.0.1 - - [15/Apr/2025 17:30:45] "GET /product/new HTTP/1.1" 200 -
+[2025-04-15 17:30:55,708] 127.0.0.1 - - [15/Apr/2025 17:30:55] "[32mPOST /product/new HTTP/1.1[0m" 302 -
+[2025-04-15 17:30:56,010] 127.0.0.1 - - [15/Apr/2025 17:30:56] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:30:56,331] 127.0.0.1 - - [15/Apr/2025 17:30:56] "GET /socket.io/?EIO=4&transport=polling&t=POuag8L HTTP/1.1" 200 -
+[2025-04-15 17:30:56,596] 127.0.0.1 - - [15/Apr/2025 17:30:56] "POST /socket.io/?EIO=4&transport=polling&t=POuagDI&sid=nKy1-_xcp1oB9WI7AAAE HTTP/1.1" 200 -
+[2025-04-15 17:30:56,644] 127.0.0.1 - - [15/Apr/2025 17:30:56] "GET /socket.io/?EIO=4&transport=polling&t=POuagDJ&sid=nKy1-_xcp1oB9WI7AAAE HTTP/1.1" 200 -
+[2025-04-15 17:30:57,617] 127.0.0.1 - - [15/Apr/2025 17:30:57] "GET /socket.io/?EIO=4&transport=websocket&sid=nKy1-_xcp1oB9WI7AAAE HTTP/1.1" 200 -
+[2025-04-15 17:30:57,623] 127.0.0.1 - - [15/Apr/2025 17:30:57] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:31:05,195] 127.0.0.1 - - [15/Apr/2025 17:31:05] "[35m[1mPOST /report HTTP/1.1[0m" 500 -
+[2025-04-15 17:31:05,482] 127.0.0.1 - - [15/Apr/2025 17:31:05] "[36mGET /report?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+[2025-04-15 17:31:05,512] 127.0.0.1 - - [15/Apr/2025 17:31:05] "[36mGET /report?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+[2025-04-15 17:31:05,853] 127.0.0.1 - - [15/Apr/2025 17:31:05] "[36mGET /report?__debugger__=yes&cmd=resource&f=console.png&s=bAx15OhkuWrNwuQ392rH HTTP/1.1[0m" 304 -
+[2025-04-15 17:31:06,112] 127.0.0.1 - - [15/Apr/2025 17:31:06] "[36mGET /report?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+[2025-04-15 17:34:02,327] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 17:34:02,328] [33mPress CTRL+C to quit[0m
+[2025-04-15 17:34:02,328]  * Restarting with stat
+[2025-04-15 17:34:03,071]  * Debugger is active!
+[2025-04-15 17:34:03,076]  * Debugger PIN: 457-375-942
+[2025-04-15 17:34:06,272] The CSRF session token is missing.
+[2025-04-15 17:34:06,272] 127.0.0.1 - - [15/Apr/2025 17:34:06] "[31m[1mPOST /report HTTP/1.1[0m" 400 -
+[2025-04-15 17:34:09,762] 127.0.0.1 - - [15/Apr/2025 17:34:09] "GET / HTTP/1.1" 200 -
+[2025-04-15 17:34:16,292] 127.0.0.1 - - [15/Apr/2025 17:34:16] "GET /login HTTP/1.1" 200 -
+[2025-04-15 17:34:27,382] 127.0.0.1 - - [15/Apr/2025 17:34:27] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 17:34:27,493] 127.0.0.1 - - [15/Apr/2025 17:34:27] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:34:27,813] 127.0.0.1 - - [15/Apr/2025 17:34:27] "GET /socket.io/?EIO=4&transport=polling&t=POubTmo HTTP/1.1" 200 -
+[2025-04-15 17:34:28,071] 127.0.0.1 - - [15/Apr/2025 17:34:28] "POST /socket.io/?EIO=4&transport=polling&t=POubTrd&sid=tgaPL9Wg65B1hNqRAAAA HTTP/1.1" 200 -
+[2025-04-15 17:34:28,119] 127.0.0.1 - - [15/Apr/2025 17:34:28] "GET /socket.io/?EIO=4&transport=polling&t=POubTre&sid=tgaPL9Wg65B1hNqRAAAA HTTP/1.1" 200 -
+[2025-04-15 17:34:28,122] 127.0.0.1 - - [15/Apr/2025 17:34:28] "GET /socket.io/?EIO=4&transport=polling&t=POubTwQ&sid=tgaPL9Wg65B1hNqRAAAA HTTP/1.1" 200 -
+[2025-04-15 17:34:31,644] 127.0.0.1 - - [15/Apr/2025 17:34:31] "GET /socket.io/?EIO=4&transport=websocket&sid=tgaPL9Wg65B1hNqRAAAA HTTP/1.1" 200 -
+[2025-04-15 17:34:31,826] 127.0.0.1 - - [15/Apr/2025 17:34:31] "GET /product/new HTTP/1.1" 200 -
+[2025-04-15 17:34:36,127] 127.0.0.1 - - [15/Apr/2025 17:34:36] "[32mPOST /product/new HTTP/1.1[0m" 302 -
+[2025-04-15 17:34:36,133] 127.0.0.1 - - [15/Apr/2025 17:34:36] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:34:36,459] 127.0.0.1 - - [15/Apr/2025 17:34:36] "GET /socket.io/?EIO=4&transport=polling&t=POubVtn HTTP/1.1" 200 -
+[2025-04-15 17:34:36,732] 127.0.0.1 - - [15/Apr/2025 17:34:36] "POST /socket.io/?EIO=4&transport=polling&t=POubVyl&sid=T2gdlpv7Qktu2M4IAAAC HTTP/1.1" 200 -
+[2025-04-15 17:34:36,773] 127.0.0.1 - - [15/Apr/2025 17:34:36] "GET /socket.io/?EIO=4&transport=polling&t=POubVyl.0&sid=T2gdlpv7Qktu2M4IAAAC HTTP/1.1" 200 -
+[2025-04-15 17:34:36,778] 127.0.0.1 - - [15/Apr/2025 17:34:36] "GET /socket.io/?EIO=4&transport=polling&t=POubW1e&sid=T2gdlpv7Qktu2M4IAAAC HTTP/1.1" 200 -
+[2025-04-15 17:34:38,263] 127.0.0.1 - - [15/Apr/2025 17:34:38] "GET /socket.io/?EIO=4&transport=websocket&sid=T2gdlpv7Qktu2M4IAAAC HTTP/1.1" 200 -
+[2025-04-15 17:34:38,431] 127.0.0.1 - - [15/Apr/2025 17:34:38] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:34:43,113] 127.0.0.1 - - [15/Apr/2025 17:34:43] "[32mPOST /report HTTP/1.1[0m" 302 -
+[2025-04-15 17:34:43,118] 127.0.0.1 - - [15/Apr/2025 17:34:43] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:34:43,436] 127.0.0.1 - - [15/Apr/2025 17:34:43] "GET /socket.io/?EIO=4&transport=polling&t=POubXav HTTP/1.1" 200 -
+[2025-04-15 17:34:43,698] 127.0.0.1 - - [15/Apr/2025 17:34:43] "POST /socket.io/?EIO=4&transport=polling&t=POubXfm&sid=1iu4pfXu3cuEwTiNAAAE HTTP/1.1" 200 -
+[2025-04-15 17:34:43,743] 127.0.0.1 - - [15/Apr/2025 17:34:43] "GET /socket.io/?EIO=4&transport=polling&t=POubXfm.0&sid=1iu4pfXu3cuEwTiNAAAE HTTP/1.1" 200 -
+[2025-04-15 17:34:57,338] 127.0.0.1 - - [15/Apr/2025 17:34:57] "GET /socket.io/?EIO=4&transport=websocket&sid=1iu4pfXu3cuEwTiNAAAE HTTP/1.1" 200 -
+[2025-04-15 17:34:57,345] 127.0.0.1 - - [15/Apr/2025 17:34:57] "GET /report HTTP/1.1" 200 -
+[2025-04-15 17:35:03,146] [Ω≈∞Ì] ªÁøÎ¿⁄ 381b9c20-5afb-4bed-ba9a-56f50711e65f∞° ¥ÎªÛ 123123∏¶ Ω≈∞Ì«‘. ¿œ∫Œ ªÁ¿Ø: 'dfasssssssssssssss' (Ω≈∞ÌID: 8e42eca7-5d56-4247-a8ee-e540c3dbd034)
+[2025-04-15 17:35:03,147] 127.0.0.1 - - [15/Apr/2025 17:35:03] "[32mPOST /report HTTP/1.1[0m" 302 -
+[2025-04-15 17:35:03,455] 127.0.0.1 - - [15/Apr/2025 17:35:03] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 17:35:03,872] 127.0.0.1 - - [15/Apr/2025 17:35:03] "GET /socket.io/?EIO=4&transport=polling&t=POubca2 HTTP/1.1" 200 -
+[2025-04-15 17:35:04,132] 127.0.0.1 - - [15/Apr/2025 17:35:04] "POST /socket.io/?EIO=4&transport=polling&t=POubcf3&sid=FHeAG_-9DOoVW720AAAG HTTP/1.1" 200 -
+[2025-04-15 17:35:04,180] 127.0.0.1 - - [15/Apr/2025 17:35:04] "GET /socket.io/?EIO=4&transport=polling&t=POubcf3.0&sid=FHeAG_-9DOoVW720AAAG HTTP/1.1" 200 -
+[2025-04-15 17:35:05,737] 127.0.0.1 - - [15/Apr/2025 17:35:05] "GET /socket.io/?EIO=4&transport=websocket&sid=FHeAG_-9DOoVW720AAAG HTTP/1.1" 200 -
+[2025-04-15 17:35:05,747] 127.0.0.1 - - [15/Apr/2025 17:35:05] "[32mGET /logout HTTP/1.1[0m" 302 -
+[2025-04-15 17:35:06,055] 127.0.0.1 - - [15/Apr/2025 17:35:06] "GET / HTTP/1.1" 200 -
+[2025-04-15 17:35:07,588] 127.0.0.1 - - [15/Apr/2025 17:35:07] "GET /login HTTP/1.1" 200 -
+[2025-04-15 17:35:14,359] 127.0.0.1 - - [15/Apr/2025 17:35:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 17:35:14,366] 127.0.0.1 - - [15/Apr/2025 17:35:14] "GET /admin HTTP/1.1" 200 -
+[2025-04-15 17:35:19,863] 127.0.0.1 - - [15/Apr/2025 17:35:19] "GET /admin/reports HTTP/1.1" 200 -
+[2025-04-15 17:35:25,344] 127.0.0.1 - - [15/Apr/2025 17:35:25] "[35m[1mPOST /admin/report/8e42eca7-5d56-4247-a8ee-e540c3dbd034/process HTTP/1.1[0m" 500 -
+[2025-04-15 17:35:25,483] 127.0.0.1 - - [15/Apr/2025 17:35:25] "GET /admin/report/8e42eca7-5d56-4247-a8ee-e540c3dbd034/process?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+[2025-04-15 17:35:25,667] 127.0.0.1 - - [15/Apr/2025 17:35:25] "GET /admin/report/8e42eca7-5d56-4247-a8ee-e540c3dbd034/process?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+[2025-04-15 17:35:25,997] 127.0.0.1 - - [15/Apr/2025 17:35:25] "GET /admin/report/8e42eca7-5d56-4247-a8ee-e540c3dbd034/process?__debugger__=yes&cmd=resource&f=console.png&s=dFRQhRsSKlwRoB6bEtdU HTTP/1.1" 200 -
+[2025-04-15 17:35:26,259] 127.0.0.1 - - [15/Apr/2025 17:35:26] "GET /admin/report/8e42eca7-5d56-4247-a8ee-e540c3dbd034/process?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+[2025-04-15 17:35:56,421]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 17:35:56,485]  * Restarting with stat
