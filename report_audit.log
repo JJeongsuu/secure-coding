@@ -412,3 +412,23 @@ jinja2.exceptions.TemplateNotFound: 404.html
  * Running on https://127.0.0.1:5000
  * Running on https://10.50.97.172:5000
 [2025-04-15 11:40:16,464] [33mPress CTRL+C to quit[0m
+[2025-04-15 16:48:06,205] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 16:48:06,205] [33mPress CTRL+C to quit[0m
+[2025-04-15 16:48:06,205]  * Restarting with stat
+[2025-04-15 16:48:06,941]  * Debugger is active!
+[2025-04-15 16:48:06,946]  * Debugger PIN: 457-375-942
+[2025-04-15 16:48:11,814] 127.0.0.1 - - [15/Apr/2025 16:48:11] "GET / HTTP/1.1" 200 -
+[2025-04-15 16:51:55,631]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 16:51:55,689]  * Restarting with stat
+[2025-04-15 16:51:56,447]  * Debugger is active!
+[2025-04-15 16:51:56,451]  * Debugger PIN: 457-375-942
+[2025-04-15 16:51:59,402] 127.0.0.1 - - [15/Apr/2025 16:51:59] "GET / HTTP/1.1" 200 -
+[2025-04-15 16:52:50,628]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 16:52:50,691]  * Restarting with stat
+[2025-04-15 16:53:20,991] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 16:53:20,991] [33mPress CTRL+C to quit[0m
+[2025-04-15 16:53:20,991]  * Restarting with stat
+[2025-04-15 16:53:21,700]  * Debugger is active!
+[2025-04-15 16:53:21,705]  * Debugger PIN: 457-375-942

@@ -400,7 +400,13 @@ def report():
         db.commit()
 
         # 감사 로그 남기기
-        logging.info(f"[신고] 사용자 {session['user_id']}가 대상 {target_id}를 사유 '{reason}'로 신고함. 신고ID: {report_id}")
+        l# 민감한 신고 사유 마스킹
+        masked_reason = reason[:20].replace("\n", " ").replace("\r", " ")
+        if len(reason) > 20:
+            masked_reason += "..."
+
+        logging.info(f"[신고] 사용자 {session['user_id']}가 대상 {target_id}를 신고함. 일부 사유: '{masked_reason}' (신고ID: {report_id})")
+
 
 
         flash('신고가 접수되었습니다.')
@@ -798,7 +804,12 @@ def ensure_user_columns():
 #Content-Security-Policy, X-Frame-Options, X-Content-Type-Options 보안 헤더 적용
 @app.after_request
 def set_security_headers(response):
-    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; "
+    )
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     return response
