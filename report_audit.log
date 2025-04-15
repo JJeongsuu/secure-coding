@@ -45,3 +45,341 @@
 [2025-04-14 22:08:30,602] 127.0.0.1 - - [14/Apr/2025 22:08:30] "GET /socket.io/?EIO=4&transport=websocket&sid=mxobuPPh2JZd5omnAAAC HTTP/1.1" 200 -
 [2025-04-14 22:08:30,890] 127.0.0.1 - - [14/Apr/2025 22:08:30] "[32mGET /product/1870687f-a16e-46c0-89cd-9586e6140af1 HTTP/1.1[0m" 302 -
 [2025-04-14 22:08:30,957] 127.0.0.1 - - [14/Apr/2025 22:08:30] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:02:59,809] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:02:59,809] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:03:09,783] 127.0.0.1 - - [15/Apr/2025 11:03:09] "GET / HTTP/1.1" 200 -
+[2025-04-15 11:03:11,438] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\WHS_securecoding\app.py", line 714, in not_found_error
+    return render_template("404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: 404.html
+[2025-04-15 11:03:11,547] 127.0.0.1 - - [15/Apr/2025 11:03:11] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[2025-04-15 11:03:20,023] 127.0.0.1 - - [15/Apr/2025 11:03:20] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:03:20,200] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\WHS_securecoding\app.py", line 714, in not_found_error
+    return render_template("404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: 404.html
+[2025-04-15 11:03:20,202] 127.0.0.1 - - [15/Apr/2025 11:03:20] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[2025-04-15 11:03:24,966] 127.0.0.1 - - [15/Apr/2025 11:03:24] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 11:03:25,078] 127.0.0.1 - - [15/Apr/2025 11:03:25] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:03:25,402] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\WHS_securecoding\app.py", line 714, in not_found_error
+    return render_template("404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\miniconda3\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: 404.html
+[2025-04-15 11:03:25,403] 127.0.0.1 - - [15/Apr/2025 11:03:25] "GET /socket.io/?EIO=4&transport=polling&t=POtBzeY HTTP/1.1" 200 -
+[2025-04-15 11:03:25,404] 127.0.0.1 - - [15/Apr/2025 11:03:25] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[2025-04-15 11:03:25,657] 127.0.0.1 - - [15/Apr/2025 11:03:25] "POST /socket.io/?EIO=4&transport=polling&t=POtBzjV&sid=RdGwxLsayuvx0RbJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:03:25,721] 127.0.0.1 - - [15/Apr/2025 11:03:25] "GET /socket.io/?EIO=4&transport=polling&t=POtBzjW&sid=RdGwxLsayuvx0RbJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:03:25,744] 127.0.0.1 - - [15/Apr/2025 11:03:25] "GET /socket.io/?EIO=4&transport=polling&t=POtBzom&sid=RdGwxLsayuvx0RbJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:06:22,017] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:06:22,018] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:06:22,018]  * Restarting with stat
+[2025-04-15 11:06:23,260]  * Debugger is active!
+[2025-04-15 11:06:23,284]  * Debugger PIN: 457-375-942
+[2025-04-15 11:06:23,294] 127.0.0.1 - - [15/Apr/2025 11:06:23] "GET /socket.io/?EIO=4&transport=polling&t=POtCeSF HTTP/1.1" 200 -
+[2025-04-15 11:06:23,299] 127.0.0.1 - - [15/Apr/2025 11:06:23] "POST /socket.io/?EIO=4&transport=polling&t=POtCf91&sid=2EKn2a6qFRARl4-4AAAA HTTP/1.1" 200 -
+[2025-04-15 11:06:23,619] 127.0.0.1 - - [15/Apr/2025 11:06:23] "GET /socket.io/?EIO=4&transport=polling&t=POtCf92&sid=2EKn2a6qFRARl4-4AAAA HTTP/1.1" 200 -
+[2025-04-15 11:06:30,713] 127.0.0.1 - - [15/Apr/2025 11:06:30] "GET /socket.io/?EIO=4&transport=websocket&sid=2EKn2a6qFRARl4-4AAAA HTTP/1.1" 200 -
+[2025-04-15 11:06:30,717] 127.0.0.1 - - [15/Apr/2025 11:06:30] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+[2025-04-15 11:06:31,031] 127.0.0.1 - - [15/Apr/2025 11:06:31] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:06:31,446] 127.0.0.1 - - [15/Apr/2025 11:06:31] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[2025-04-15 11:08:20,275] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:08:20,275] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:08:20,276]  * Restarting with stat
+[2025-04-15 11:08:20,965]  * Debugger is active!
+[2025-04-15 11:08:20,970]  * Debugger PIN: 457-375-942
+[2025-04-15 11:08:30,353] 127.0.0.1 - - [15/Apr/2025 11:08:30] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:08:30,365] 127.0.0.1 - - [15/Apr/2025 11:08:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-04-15 11:08:33,520] 127.0.0.1 - - [15/Apr/2025 11:08:33] "GET / HTTP/1.1" 200 -
+[2025-04-15 11:08:35,585] 127.0.0.1 - - [15/Apr/2025 11:08:35] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:08:41,751] 127.0.0.1 - - [15/Apr/2025 11:08:41] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 11:08:41,756] 127.0.0.1 - - [15/Apr/2025 11:08:41] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:08:42,074] 127.0.0.1 - - [15/Apr/2025 11:08:42] "GET /socket.io/?EIO=4&transport=polling&t=POtDAye HTTP/1.1" 200 -
+[2025-04-15 11:08:42,350] 127.0.0.1 - - [15/Apr/2025 11:08:42] "POST /socket.io/?EIO=4&transport=polling&t=POtDB1S&sid=gqTdOdRlvGjIzVulAAAA HTTP/1.1" 200 -
+[2025-04-15 11:08:42,381] 127.0.0.1 - - [15/Apr/2025 11:08:42] "GET /socket.io/?EIO=4&transport=polling&t=POtDB1T&sid=gqTdOdRlvGjIzVulAAAA HTTP/1.1" 200 -
+[2025-04-15 11:08:45,725] 127.0.0.1 - - [15/Apr/2025 11:08:45] "GET /socket.io/?EIO=4&transport=websocket&sid=gqTdOdRlvGjIzVulAAAA HTTP/1.1" 200 -
+[2025-04-15 11:08:45,740] 127.0.0.1 - - [15/Apr/2025 11:08:45] "GET /profile HTTP/1.1" 200 -
+[2025-04-15 11:08:48,789] 127.0.0.1 - - [15/Apr/2025 11:08:48] "[32mGET / HTTP/1.1[0m" 302 -
+[2025-04-15 11:08:49,099] 127.0.0.1 - - [15/Apr/2025 11:08:49] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:08:49,363] 127.0.0.1 - - [15/Apr/2025 11:08:49] "GET /socket.io/?EIO=4&transport=polling&t=POtDCm2 HTTP/1.1" 200 -
+[2025-04-15 11:08:49,471] 127.0.0.1 - - [15/Apr/2025 11:08:49] "POST /socket.io/?EIO=4&transport=polling&t=POtDCpP&sid=9knaEfU_o8PK9s5WAAAC HTTP/1.1" 200 -
+[2025-04-15 11:08:49,687] 127.0.0.1 - - [15/Apr/2025 11:08:49] "GET /socket.io/?EIO=4&transport=polling&t=POtDCpT&sid=9knaEfU_o8PK9s5WAAAC HTTP/1.1" 200 -
+[2025-04-15 11:08:50,418] 127.0.0.1 - - [15/Apr/2025 11:08:50] "GET /socket.io/?EIO=4&transport=polling&t=POtDCuS&sid=9knaEfU_o8PK9s5WAAAC HTTP/1.1" 200 -
+[2025-04-15 11:08:51,855] 127.0.0.1 - - [15/Apr/2025 11:08:51] "GET /socket.io/?EIO=4&transport=websocket&sid=9knaEfU_o8PK9s5WAAAC HTTP/1.1" 200 -
+[2025-04-15 11:08:52,005] 127.0.0.1 - - [15/Apr/2025 11:08:52] "GET /profile HTTP/1.1" 200 -
+[2025-04-15 11:08:52,406] 127.0.0.1 - - [15/Apr/2025 11:08:52] "GET /report HTTP/1.1" 200 -
+[2025-04-15 11:08:53,203] 127.0.0.1 - - [15/Apr/2025 11:08:53] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:08:53,519] 127.0.0.1 - - [15/Apr/2025 11:08:53] "GET /socket.io/?EIO=4&transport=polling&t=POtDDlQ HTTP/1.1" 200 -
+[2025-04-15 11:08:53,832] 127.0.0.1 - - [15/Apr/2025 11:08:53] "POST /socket.io/?EIO=4&transport=polling&t=POtDDqJ&sid=wjCehXxokhBaaJTOAAAE HTTP/1.1" 200 -
+[2025-04-15 11:08:53,836] 127.0.0.1 - - [15/Apr/2025 11:08:53] "GET /socket.io/?EIO=4&transport=polling&t=POtDDqK&sid=wjCehXxokhBaaJTOAAAE HTTP/1.1" 200 -
+[2025-04-15 11:08:56,817] 127.0.0.1 - - [15/Apr/2025 11:08:56] "GET /socket.io/?EIO=4&transport=websocket&sid=wjCehXxokhBaaJTOAAAE HTTP/1.1" 200 -
+[2025-04-15 11:08:56,837] 127.0.0.1 - - [15/Apr/2025 11:08:56] "GET /product/092b2ef9-dc8f-4fb3-9138-291a6b218271 HTTP/1.1" 200 -
+[2025-04-15 11:08:58,436] 127.0.0.1 - - [15/Apr/2025 11:08:58] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:08:58,739] 127.0.0.1 - - [15/Apr/2025 11:08:58] "GET /socket.io/?EIO=4&transport=polling&t=POtDF1C HTTP/1.1" 200 -
+[2025-04-15 11:08:59,050] 127.0.0.1 - - [15/Apr/2025 11:08:59] "POST /socket.io/?EIO=4&transport=polling&t=POtDF5r&sid=4SfuXDgRV-0srKtOAAAG HTTP/1.1" 200 -
+[2025-04-15 11:08:59,053] 127.0.0.1 - - [15/Apr/2025 11:08:59] "GET /socket.io/?EIO=4&transport=polling&t=POtDF5s&sid=4SfuXDgRV-0srKtOAAAG HTTP/1.1" 200 -
+[2025-04-15 11:08:59,506] 127.0.0.1 - - [15/Apr/2025 11:08:59] "GET /socket.io/?EIO=4&transport=websocket&sid=4SfuXDgRV-0srKtOAAAG HTTP/1.1" 200 -
+[2025-04-15 11:08:59,516] 127.0.0.1 - - [15/Apr/2025 11:08:59] "GET /product/935753a0-b8ac-4be4-ae24-488b2048c4a0 HTTP/1.1" 200 -
+[2025-04-15 11:09:00,544] 127.0.0.1 - - [15/Apr/2025 11:09:00] "GET /product/935753a0-b8ac-4be4-ae24-488b2048c4a0/edit HTTP/1.1" 200 -
+[2025-04-15 11:14:53,344]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:14:53,411]  * Restarting with stat
+[2025-04-15 11:14:54,158]  * Debugger is active!
+[2025-04-15 11:14:54,174]  * Debugger PIN: 457-375-942
+[2025-04-15 11:14:55,189]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:14:55,252]  * Restarting with stat
+[2025-04-15 11:14:55,991]  * Debugger is active!
+[2025-04-15 11:14:55,991]  * Debugger PIN: 457-375-942
+[2025-04-15 11:15:03,052]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:15:03,107]  * Restarting with stat
+[2025-04-15 11:15:04,090]  * Debugger is active!
+[2025-04-15 11:15:04,095]  * Debugger PIN: 457-375-942
+[2025-04-15 11:15:05,103]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:15:05,173]  * Restarting with stat
+[2025-04-15 11:15:05,904]  * Debugger is active!
+[2025-04-15 11:15:05,909]  * Debugger PIN: 457-375-942
+[2025-04-15 11:15:06,921]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:15:06,979]  * Restarting with stat
+[2025-04-15 11:15:07,678]  * Debugger is active!
+[2025-04-15 11:15:07,683]  * Debugger PIN: 457-375-942
+[2025-04-15 11:15:29,234] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2025-04-15 11:15:29,234] [33mPress CTRL+C to quit[0m
+[2025-04-15 11:15:29,234]  * Restarting with stat
+[2025-04-15 11:15:29,947]  * Debugger is active!
+[2025-04-15 11:15:29,953]  * Debugger PIN: 457-375-942
+[2025-04-15 11:15:35,041] 127.0.0.1 - - [15/Apr/2025 11:15:35] "[32mGET /product/935753a0-b8ac-4be4-ae24-488b2048c4a0/edit HTTP/1.1[0m" 302 -
+[2025-04-15 11:15:35,053] 127.0.0.1 - - [15/Apr/2025 11:15:35] "GET /login HTTP/1.1" 200 -
+[2025-04-15 11:15:42,370] 127.0.0.1 - - [15/Apr/2025 11:15:42] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-04-15 11:15:42,475] 127.0.0.1 - - [15/Apr/2025 11:15:42] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:15:42,794] 127.0.0.1 - - [15/Apr/2025 11:15:42] "GET /socket.io/?EIO=4&transport=polling&t=POtEngO HTTP/1.1" 200 -
+[2025-04-15 11:15:43,055] 127.0.0.1 - - [15/Apr/2025 11:15:43] "POST /socket.io/?EIO=4&transport=polling&t=POtEnlD&sid=qyXd50zZDfiGT-VsAAAA HTTP/1.1" 200 -
+[2025-04-15 11:15:43,104] 127.0.0.1 - - [15/Apr/2025 11:15:43] "GET /socket.io/?EIO=4&transport=polling&t=POtEnlD.0&sid=qyXd50zZDfiGT-VsAAAA HTTP/1.1" 200 -
+[2025-04-15 11:15:43,116] 127.0.0.1 - - [15/Apr/2025 11:15:43] "GET /socket.io/?EIO=4&transport=polling&t=POtEnq3&sid=qyXd50zZDfiGT-VsAAAA HTTP/1.1" 200 -
+[2025-04-15 11:15:45,079] 127.0.0.1 - - [15/Apr/2025 11:15:45] "GET /socket.io/?EIO=4&transport=websocket&sid=qyXd50zZDfiGT-VsAAAA HTTP/1.1" 200 -
+[2025-04-15 11:15:45,248] 127.0.0.1 - - [15/Apr/2025 11:15:45] "GET /report HTTP/1.1" 200 -
+[2025-04-15 11:16:09,583] 127.0.0.1 - - [15/Apr/2025 11:16:09] "[32mPOST /report HTTP/1.1[0m" 302 -
+[2025-04-15 11:16:09,589] 127.0.0.1 - - [15/Apr/2025 11:16:09] "GET /dashboard HTTP/1.1" 200 -
+[2025-04-15 11:16:09,911] 127.0.0.1 - - [15/Apr/2025 11:16:09] "GET /socket.io/?EIO=4&transport=polling&t=POtEuH- HTTP/1.1" 200 -
+[2025-04-15 11:16:10,173] 127.0.0.1 - - [15/Apr/2025 11:16:10] "POST /socket.io/?EIO=4&transport=polling&t=POtEuMx&sid=g3vqABLdOlnKVfjcAAAC HTTP/1.1" 200 -
+[2025-04-15 11:16:10,221] 127.0.0.1 - - [15/Apr/2025 11:16:10] "GET /socket.io/?EIO=4&transport=polling&t=POtEuMy&sid=g3vqABLdOlnKVfjcAAAC HTTP/1.1" 200 -
+[2025-04-15 11:16:10,235] 127.0.0.1 - - [15/Apr/2025 11:16:10] "GET /socket.io/?EIO=4&transport=polling&t=POtEuRo&sid=g3vqABLdOlnKVfjcAAAC HTTP/1.1" 200 -
+[2025-04-15 11:18:28,558]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:28,623]  * Restarting with stat
+[2025-04-15 11:18:29,445]  * Debugger is active!
+[2025-04-15 11:18:29,451]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:29,734] 127.0.0.1 - - [15/Apr/2025 11:18:29] "GET /socket.io/?EIO=4&transport=polling&t=POtFQQs HTTP/1.1" 200 -
+[2025-04-15 11:18:30,013] 127.0.0.1 - - [15/Apr/2025 11:18:30] "POST /socket.io/?EIO=4&transport=polling&t=POtFQVh&sid=HPmU4lCdbfbwNcgJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:30,048] 127.0.0.1 - - [15/Apr/2025 11:18:30] "GET /socket.io/?EIO=4&transport=polling&t=POtFQVl&sid=HPmU4lCdbfbwNcgJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:30,051] 127.0.0.1 - - [15/Apr/2025 11:18:30] "GET /socket.io/?EIO=4&transport=polling&t=POtFQaY&sid=HPmU4lCdbfbwNcgJAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:30,462]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:30,518]  * Restarting with stat
+[2025-04-15 11:18:31,289]  * Debugger is active!
+[2025-04-15 11:18:31,294]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:32,734] 127.0.0.1 - - [15/Apr/2025 11:18:32] "GET /socket.io/?EIO=4&transport=polling&t=POtFR9f HTTP/1.1" 200 -
+[2025-04-15 11:18:32,994] 127.0.0.1 - - [15/Apr/2025 11:18:32] "POST /socket.io/?EIO=4&transport=polling&t=POtFREY&sid=dPvWYK5gyphAz_LoAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:33,043] 127.0.0.1 - - [15/Apr/2025 11:18:33] "GET /socket.io/?EIO=4&transport=polling&t=POtFREZ&sid=dPvWYK5gyphAz_LoAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:33,051] 127.0.0.1 - - [15/Apr/2025 11:18:33] "GET /socket.io/?EIO=4&transport=polling&t=POtFRJO&sid=dPvWYK5gyphAz_LoAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:33,305]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:33,363]  * Restarting with stat
+[2025-04-15 11:18:34,112]  * Debugger is active!
+[2025-04-15 11:18:34,118]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:35,128]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:35,180]  * Restarting with stat
+[2025-04-15 11:18:35,882]  * Debugger is active!
+[2025-04-15 11:18:35,882]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:35,903] 127.0.0.1 - - [15/Apr/2025 11:18:35] "GET /socket.io/?EIO=4&transport=polling&t=POtFRv9 HTTP/1.1" 200 -
+[2025-04-15 11:18:36,033] 127.0.0.1 - - [15/Apr/2025 11:18:36] "POST /socket.io/?EIO=4&transport=polling&t=POtFS01&sid=KeETXbDfzDwxuk3NAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:36,216] 127.0.0.1 - - [15/Apr/2025 11:18:36] "GET /socket.io/?EIO=4&transport=polling&t=POtFS02&sid=KeETXbDfzDwxuk3NAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:36,216] 127.0.0.1 - - [15/Apr/2025 11:18:36] "GET /socket.io/?EIO=4&transport=polling&t=POtFS50&sid=KeETXbDfzDwxuk3NAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:45,938]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:46,000]  * Restarting with stat
+[2025-04-15 11:18:46,735]  * Debugger is active!
+[2025-04-15 11:18:46,739]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:47,750] 127.0.0.1 - - [15/Apr/2025 11:18:47] "GET /socket.io/?EIO=4&transport=polling&t=POtFUq7 HTTP/1.1" 200 -
+[2025-04-15 11:18:48,016] 127.0.0.1 - - [15/Apr/2025 11:18:48] "POST /socket.io/?EIO=4&transport=polling&t=POtFUvB&sid=rXc9ZSo4-aLUjkIGAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:48,067] 127.0.0.1 - - [15/Apr/2025 11:18:48] "GET /socket.io/?EIO=4&transport=polling&t=POtFUvB.0&sid=rXc9ZSo4-aLUjkIGAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:48,076] 127.0.0.1 - - [15/Apr/2025 11:18:48] "GET /socket.io/?EIO=4&transport=polling&t=POtFU-B&sid=rXc9ZSo4-aLUjkIGAAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:51,762]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:51,821]  * Restarting with stat
+[2025-04-15 11:18:52,568]  * Debugger is active!
+[2025-04-15 11:18:52,574]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:53,730] 127.0.0.1 - - [15/Apr/2025 11:18:53] "GET /socket.io/?EIO=4&transport=polling&t=POtFWHm HTTP/1.1" 200 -
+[2025-04-15 11:18:53,988] 127.0.0.1 - - [15/Apr/2025 11:18:53] "POST /socket.io/?EIO=4&transport=polling&t=POtFWMb&sid=Gs-kz22SgNCXXYK5AAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:54,050] 127.0.0.1 - - [15/Apr/2025 11:18:54] "GET /socket.io/?EIO=4&transport=polling&t=POtFWMc&sid=Gs-kz22SgNCXXYK5AAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:54,066] 127.0.0.1 - - [15/Apr/2025 11:18:54] "GET /socket.io/?EIO=4&transport=polling&t=POtFWRc&sid=Gs-kz22SgNCXXYK5AAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:57,592]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:18:57,653]  * Restarting with stat
+[2025-04-15 11:18:58,432]  * Debugger is active!
+[2025-04-15 11:18:58,432]  * Debugger PIN: 457-375-942
+[2025-04-15 11:18:58,755] 127.0.0.1 - - [15/Apr/2025 11:18:58] "GET /socket.io/?EIO=4&transport=polling&t=POtFXWH HTTP/1.1" 200 -
+[2025-04-15 11:18:59,020] 127.0.0.1 - - [15/Apr/2025 11:18:59] "POST /socket.io/?EIO=4&transport=polling&t=POtFXb5&sid=p0U0mzXJ46TtvKw2AAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:59,061] 127.0.0.1 - - [15/Apr/2025 11:18:59] "GET /socket.io/?EIO=4&transport=polling&t=POtFXb6&sid=p0U0mzXJ46TtvKw2AAAA HTTP/1.1" 200 -
+[2025-04-15 11:18:59,066] 127.0.0.1 - - [15/Apr/2025 11:18:59] "GET /socket.io/?EIO=4&transport=polling&t=POtFXfu&sid=p0U0mzXJ46TtvKw2AAAA HTTP/1.1" 200 -
+[2025-04-15 11:19:00,459]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:19:00,516]  * Restarting with stat
+[2025-04-15 11:19:01,266]  * Debugger is active!
+[2025-04-15 11:19:01,272]  * Debugger PIN: 457-375-942
+[2025-04-15 11:19:01,753] 127.0.0.1 - - [15/Apr/2025 11:19:01] "GET /socket.io/?EIO=4&transport=polling&t=POtFYEw HTTP/1.1" 200 -
+[2025-04-15 11:19:01,996] 127.0.0.1 - - [15/Apr/2025 11:19:01] "POST /socket.io/?EIO=4&transport=polling&t=POtFYJy&sid=ab8r2cNxUPCULWaaAAAA HTTP/1.1" 200 -
+[2025-04-15 11:19:02,074] 127.0.0.1 - - [15/Apr/2025 11:19:02] "GET /socket.io/?EIO=4&transport=polling&t=POtFYJz&sid=ab8r2cNxUPCULWaaAAAA HTTP/1.1" 200 -
+[2025-04-15 11:19:02,080] 127.0.0.1 - - [15/Apr/2025 11:19:02] "GET /socket.io/?EIO=4&transport=polling&t=POtFYO-&sid=ab8r2cNxUPCULWaaAAAA HTTP/1.1" 200 -
+[2025-04-15 11:19:37,409]  * Detected change in 'E:\\WHS_securecoding\\app.py', reloading
+[2025-04-15 11:19:37,466]  * Restarting with stat

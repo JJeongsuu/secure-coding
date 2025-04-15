@@ -398,6 +398,11 @@ def report():
             (report_id, session['user_id'], target_id, reason, timestamp, status)
         )
         db.commit()
+
+        # 감사 로그 남기기
+        logging.info(f"[신고] 사용자 {session['user_id']}가 대상 {target_id}를 사유 '{reason}'로 신고함. 신고ID: {report_id}")
+
+
         flash('신고가 접수되었습니다.')
         return redirect(url_for('dashboard'))
 
@@ -757,9 +762,45 @@ def not_found_error(error):
 #     except:
 #         return "이미 추가되어 있을 수 있음"
 
+#과제 제출 시 db초기화를 막기 위해  관리자 계정을 자동 생성하기기
+def ensure_admin():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM user WHERE username = 'admin'")
+    if not cursor.fetchone():
+        admin_id = str(uuid.uuid4())
+        hashed_pw = bcrypt.hashpw("admin123".encode(), bcrypt.gensalt())
+        cursor.execute(
+            "INSERT INTO user (id, username, password, is_admin, balance) VALUES (?, ?, ?, ?, ?)",
+            (admin_id, "admin", hashed_pw, 1, 10000)
+        )
+        db.commit()
+        print("기본 관리자 계정(admin / admin123) 자동 생성됨")
+
+def ensure_user_columns():
+    db = get_db()
+    cursor = db.cursor()
+    # user 테이블 컬럼 목록 가져오기
+    cursor.execute("PRAGMA table_info(user)")
+    columns = [row[1] for row in cursor.fetchall()]  # row[1]은 컬럼 이름
+
+    if 'is_admin' not in columns:
+        cursor.execute("ALTER TABLE user ADD COLUMN is_admin INTEGER DEFAULT 0")
+        print("is_admin 컬럼 자동 추가됨")
+
+    if 'balance' not in columns:
+        cursor.execute("ALTER TABLE user ADD COLUMN balance INTEGER DEFAULT 10000")
+        print("balance 컬럼 자동 추가됨")
+
+    db.commit()
+
+
 if __name__ == '__main__':
     init_db()  # 앱 컨텍스트 내에서 테이블 생성
-    socketio.run(app, debug=False)
+    with app.app_context():
+        ensure_user_columns()
+        ensure_admin() 
+    socketio.run(app, debug=True)
 
 
 
