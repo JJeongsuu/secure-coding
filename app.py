@@ -237,6 +237,8 @@ def login():
         if user and bcrypt.checkpw(password.encode(), user['password']):
             session.clear()  # session fixation 방지
             session['user_id'] = user['id']
+            session['is_admin'] = bool(user['is_admin'])
+
             #관리자 --> /admin 으로 리디렉션
             if user['is_admin'] == 1:
                 flash('관리자 로그인 성공!')

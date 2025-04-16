@@ -87,23 +87,29 @@
 </head>
 <body>
   <nav>
-    <!--로그인 여부 관계 없이 항상 보이는 검색창-->
+    <!-- 검색창은 항상 보이게 -->
     <form action="{{ url_for('search') }}" method="get" style="display: inline;">
       <input type="text" name="q" placeholder="상품 검색">
       <button type="submit">검색</button>
     </form>
-
+  
     {% if session.get('user_id') %}
-      <a href="{{ url_for('dashboard') }}">대시보드</a>
-      <a href="{{ url_for('profile') }}">프로필</a>
-      <a href="{{ url_for('report') }}">신고하기</a>
-      <a href="{{ url_for('transfer') }}">송금하기</a>
+      {% if session.get('is_admin') %}
+        <!-- 관리자에게만 보이는 메뉴 -->
+        <a href="{{ url_for('admin_panel') }}">관리자 페이지</a>
+      {% else %}
+        <!-- 일반 사용자에게만 보이는 메뉴 -->
+        <a href="{{ url_for('dashboard') }}">대시보드</a>
+        <a href="{{ url_for('profile') }}">프로필</a>
+        <a href="{{ url_for('report') }}">신고하기</a>
+        <a href="{{ url_for('transfer') }}">송금하기</a>
+      {% endif %}
       <a href="{{ url_for('logout') }}">로그아웃</a>
     {% else %}
       <a href="{{ url_for('login') }}">로그인</a>
       <a href="{{ url_for('register') }}">회원가입</a>
     {% endif %}
-  </nav>
+  </nav>  
   <div class="container">
     {% with messages = get_flashed_messages() %}
       {% if messages %}
