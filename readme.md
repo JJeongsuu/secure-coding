@@ -37,7 +37,7 @@ ngrok http 5000
 
 
 
-앱 실행시 ensure_admin 함수에 의해 자동생성됩니다. 
+  ==> 앱 실행시 ensure_admin 함수에 의해 자동생성됩니다. 
 
 
 ## 주요 기능
