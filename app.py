@@ -519,6 +519,38 @@ def process_report(report_id):
 
     return redirect(url_for('admin_reports'))
 
+#관리자 페이지 송금 내역 보기기
+@app.route('/admin/transfers')
+def admin_transfers():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # 관리자 체크
+    cursor.execute("SELECT is_admin FROM user WHERE id = ?", (session['user_id'],))
+    admin = cursor.fetchone()
+    if not admin or admin['is_admin'] != 1:
+        flash("접근 권한이 없습니다.")
+        return redirect(url_for('dashboard'))
+
+    # 송금 내역 가져오기 - username으로 보여주기
+    cursor.execute("""
+        SELECT 
+            t.amount, t.timestamp,
+            sender.username AS sender_name,
+            receiver.username AS receiver_name
+        FROM transfer t
+        JOIN user sender ON t.sender_id = sender.id
+        JOIN user receiver ON t.receiver_id = receiver.id
+        ORDER BY t.timestamp DESC
+    """)
+    
+    transfers = cursor.fetchall()
+
+    return render_template('admin_transfer.html', transfers=transfers)
+
 
 
 
@@ -650,9 +682,16 @@ def transfer():
             flash("받는 사용자가 존재하지 않습니다.")
             return redirect(url_for('transfer'))
 
-        # 송금 실행
+        # 송금 실행 및 기록 저장
         cursor.execute("UPDATE user SET balance = balance - ? WHERE id = ?", (amount, sender['id']))
         cursor.execute("UPDATE user SET balance = balance + ? WHERE id = ?", (amount, receiver['id']))
+
+        transfer_id = str(uuid.uuid4())
+        cursor.execute(
+            "INSERT INTO transfer (id, sender_id, receiver_id, amount) VALUES (?, ?, ?, ?)",
+            (transfer_id, sender['id'], receiver['id'], amount)
+        )
+
         db.commit()
 
         flash(f"{receiver_name}님에게 {amount}원 송금 완료!")
