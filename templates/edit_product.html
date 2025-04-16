@@ -3,15 +3,21 @@
 {% block content %}
 <h2>상품 수정</h2>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   제목: {{ form.title(size=50) }}<br>
   설명:<br>
   {{ form.description(rows=4, cols=50) }}<br>
   가격: {{ form.price(size=20) }}<br>
+  이미지 변경: <input type="file" name="image"><br>
+
+  {% if product.image_path %}
+    <p>현재 이미지:</p>
+    <img src="{{ url_for('uploaded_file', filename=product.image_path) }}" width="200"><br>
+  {% endif %}
+
   {{ form.submit() }}
 </form>
 
 <a href="{{ url_for('view_product', product_id=product.id) }}">← 돌아가기</a>
 {% endblock %}
-

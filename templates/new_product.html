@@ -2,12 +2,18 @@
 {% block title %}새 상품 등록{% endblock %}
 {% block content %}
 <h2>상품 등록</h2>
-<form method="post" action="{{ url_for('new_product') }}">
+
+<form method="post" action="{{ url_for('new_product') }}" enctype="multipart/form-data">
   {{ form.hidden_tag() }}  <!-- CSRF 토큰 필수 -->
+
   제목: {{ form.title(size=40) }}<br>
   설명: <br>
   {{ form.description(rows=4, cols=50) }}<br>
   가격: {{ form.price(size=20) }}<br>
+
+  <!-- 이미지 업로드 필드 -->
+  이미지: <input type="file" name="image"><br><br>
+
   {{ form.submit() }}
 </form>
 {% endblock %}

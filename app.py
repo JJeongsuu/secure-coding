@@ -6,7 +6,7 @@ import os
 import html
 import time
 import logging
-from flask import Flask, render_template, request, redirect, url_for, session, flash, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g, current_app, send_from_directory
 from flask_socketio import SocketIO, send, emit
 #Flask-WTF 기반 Register Form 모듈
 from flask_wtf import FlaskForm
@@ -16,6 +16,7 @@ from wtforms.validators import DataRequired, Length, Regexp
 from datetime import timedelta   #세션 시간위해서
 from datetime import datetime
 from time import sleep
+from werkzeug.utils import secure_filename
 
 
 
@@ -31,8 +32,19 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SECURE'] = True  # HTTPS 환경에서만 동작
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # 폴더 없으면 자동 생성
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 last_message_time = {}
 MESSAGE_COOLDOWN = 1.5
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # 신고관련 로그 파일 저장 설정
 logging.basicConfig(
@@ -300,17 +312,30 @@ def new_product():
         title = form.title.data
         description = form.description.data
         price = form.price.data
+        image_file = request.files.get('image')
+        image_filename = None
+
+        #이미지 파일 가져오기  
+        if image_file and allowed_file(image_file.filename):
+            filename = secure_filename(image_file.filename)  # 안전한 파일명
+            image_filename = str(uuid.uuid4()) + "_" + filename  # UUID로 중복 방지
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
+
+
+        #DB에 이미지 파일명도 같이 저장
         db = get_db()
         cursor = db.cursor()
         product_id = str(uuid.uuid4())
         cursor.execute(
-            "INSERT INTO product (id, title, description, price, seller_id) VALUES (?, ?, ?, ?, ?)",
-            (product_id, title, description, price, session['user_id'])
+            "INSERT INTO product (id, title, description, price, image_path, seller_id) VALUES (?, ?, ?, ?, ?, ?)",
+            (product_id, title, description, price, image_filename, session['user_id'])
         )
         db.commit()
         flash('상품이 등록되었습니다.')
         return redirect(url_for('dashboard'))
-    return render_template('new_product.html', form = form)
+    
+    return render_template('new_product.html', form=form)
 
 # 상품 상세보기
 @app.route('/product/<product_id>')
@@ -331,7 +356,7 @@ def view_product(product_id):
     seller = cursor.fetchone()
     return render_template('view_product.html', product=product, seller=seller, form=DeleteForm())
 
-#상세정보 수정
+#상품 수정정
 @app.route('/product/<product_id>/edit', methods=['GET', 'POST'])
 def edit_product(product_id):
     if 'user_id' not in session:
@@ -348,13 +373,23 @@ def edit_product(product_id):
         return redirect(url_for('dashboard'))
 
     form = ProductForm(data=product)
+
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
         price = form.price.data
+
+        image_path = product['image_path']  # 기본은 기존 이미지 경로 유지
+        if 'image' in request.files:
+            image = request.files['image']
+            if image and allowed_file(image.filename):
+                filename = secure_filename(str(uuid.uuid4()) + '_' + image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image_path = filename
+
         cursor.execute(
-            "UPDATE product SET title=?, description=?, price=? WHERE id=?",
-            (title, description, price, product_id)
+            "UPDATE product SET title=?, description=?, price=?, image_path=? WHERE id=?",
+            (title, description, price, image_path, product_id)
         )
         db.commit()
         flash('상품이 수정되었습니다.')
@@ -786,7 +821,20 @@ def not_found_error(error):
 #     except:
 #         return "이미 추가되어 있을 수 있음"
 
-#과제 제출 시 db초기화를 막기 위해  관리자 계정을 자동 생성하기기
+# 상품 이미지 등록하기기
+# @app.route('/add-image-column')
+# def add_image_column():
+#     db = get_db()
+#     cursor = db.cursor()
+#     try:
+#         cursor.execute("ALTER TABLE product ADD COLUMN image_path TEXT")
+#         db.commit()
+#         return "image_path 컬럼 추가 완료"
+#     except Exception as e:
+#         return f"이미 추가된 것 같아 또는 오류 발생: {e}"
+
+
+#과제 제출 시 db초기화를 막기 위해  관리자 계정을 자동 생성하기
 def ensure_admin():
     db = get_db()
     cursor = db.cursor()
@@ -831,6 +879,12 @@ def set_security_headers(response):
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     return response
+
+#상품 사진 첨부
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 
 if __name__ == '__main__':
