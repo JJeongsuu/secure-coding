@@ -546,7 +546,7 @@ def admin_transfers():
         JOIN user receiver ON t.receiver_id = receiver.id
         ORDER BY t.timestamp DESC
     """)
-    
+
     transfers = cursor.fetchall()
 
     return render_template('admin_transfer.html', transfers=transfers)
@@ -933,7 +933,7 @@ if __name__ == '__main__':
     with app.app_context():
         ensure_user_columns()
         ensure_admin() 
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=False)
 
 
 
