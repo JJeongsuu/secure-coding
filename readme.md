@@ -31,7 +31,10 @@ ngrok http 5000
 ## 기본 관리자 계정
 
 아이디 : admin
-비밀번호 : admin123
+비밀번호 : admin123             
+
+
+
 
 
 앱 실행시 ensure_admin 함수에 의해 자동생성됩니다. 
